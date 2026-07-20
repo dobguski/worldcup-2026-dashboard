@@ -1,0 +1,22 @@
+[Unit]
+Description=World Cup 2026 Live Sync Server
+Documentation=https://github.com/dobguski/worldcup-2026-dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/worldcup-live
+ExecStart=/usr/bin/python3 /opt/worldcup-live/run_server.py
+Restart=always
+RestartSec=10
+
+# Security hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/opt/worldcup-live
+
+[Install]
+WantedBy=multi-user.target

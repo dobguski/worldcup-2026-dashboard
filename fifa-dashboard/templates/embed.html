@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>猜冠军 — DobGuski</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--alt:#212433;--border:#2a2d3a;--text:#e1e4ed;--dim:#8b8fa3;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;--orange:#f97316;--radius:6px;--rlg:10px;--mw:100%}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:transparent;color:var(--text);line-height:1.5;font-size:.92rem}
+a{color:var(--blue);text-decoration:none}
+.embed-tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
+.embed-tab{padding:6px 14px;border-radius:var(--radius);font-size:.78rem;cursor:pointer;border:1px solid var(--border);background:rgba(30,41,59,.6);color:var(--dim);transition:all .12s;backdrop-filter:blur(4px)}
+.embed-tab:hover{background:var(--alt);color:var(--text)}
+.embed-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.hidden{display:none}
+.card{background:rgba(26,29,39,.7);border:1px solid var(--border);border-radius:var(--rlg);padding:14px 16px;margin-bottom:12px;backdrop-filter:blur(4px)}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card-title{font-size:.92rem;font-weight:700}
+.card-badge{font-size:.65rem;padding:1px 7px;border-radius:8px;background:var(--alt);color:var(--dim)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:600px){.grid4{grid-template-columns:repeat(2,1fr)}}
+.full{grid-column:1/-1}
+.odds-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.odds-table th{text-align:left;padding:5px 7px;border-bottom:2px solid var(--border);color:var(--dim);font-size:.65rem;text-transform:uppercase}
+.odds-table td{padding:6px 7px;border-bottom:1px solid var(--border)}
+.odds-table tbody tr{cursor:pointer;transition:background .12s}
+.odds-table tbody tr:hover{background:rgba(59,130,246,.08)}
+.t-up{color:var(--green)}.t-down{color:var(--red)}.t-stable{color:var(--yellow)}
+.prob-bar{display:inline-block;height:4px;border-radius:2px;margin-right:4px;vertical-align:middle;background:var(--blue);opacity:.6}
+.overview-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ov-card{background:var(--alt);border-radius:var(--radius);padding:10px 12px;text-align:center}
+.ov-card .label{font-size:.65rem;color:var(--dim);text-transform:uppercase;margin-bottom:2px}
+.ov-card .value{font-size:1.05rem;font-weight:700}
+.chart-wrap{position:relative;width:100%;height:240px}
+.chart-wrap.tall{height:300px}
+.cta-banner{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(34,197,94,.05));border:1px solid var(--blue);border-radius:var(--rlg);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-size:.8rem}
+.btn{display:inline-block;padding:5px 12px;border-radius:var(--radius);font-size:.75rem;font-weight:600;transition:all .15s;border:none;cursor:pointer}
+.btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:#2563eb;text-decoration:none}
+.trade-btn{font-size:.6rem;padding:2px 8px;background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.25);border-radius:3px;transition:all .12s;white-space:nowrap}
+.trade-btn:hover{background:var(--blue);color:#fff;text-decoration:none}
+.text-dim{color:var(--dim)}.text-up{color:var(--green)}.text-down{color:var(--red)}
+.flex-between{display:flex;justify-content:space-between;align-items:center}
+.mt-8{margin-top:8px}.mb-8{margin-bottom:8px}
+.match-card{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;padding:10px 12px;background:var(--alt);border-radius:var(--radius);margin-bottom:4px;border-left:3px solid transparent;font-size:.8rem}
+.match-card.upset{border-left-color:var(--red)}.match-card.fav-won{border-left-color:var(--green)}
+.match-score{font-size:1.1rem;font-weight:800;text-align:center;padding:4px 10px;background:rgba(15,17,23,.5);border-radius:var(--radius)}
+.match-pred{font-size:.7rem;padding:3px 6px;border-radius:var(--radius);text-align:center}
+.match-pred.correct{background:rgba(34,197,94,.06);color:var(--green)}
+.match-pred.wrong{background:rgba(239,68,68,.06);color:var(--red)}
+.tier-card{background:var(--alt);border-radius:var(--rlg);padding:10px;text-align:center;border-top:2px solid transparent}
+.tier-card.super{border-top-color:var(--red)}.tier-card.strong{border-top-color:var(--blue)}
+.tier-card.mild{border-top-color:var(--yellow)}.tier-card.weak{border-top-color:var(--orange)}
+.tier-rate{font-size:1.2rem;font-weight:800}.tier-label{font-size:.7rem;color:var(--dim)}
+.tier-count{font-size:.65rem;color:var(--dim)}
+.brier-value{font-size:1.6rem;font-weight:800}.brier-value.bad{color:var(--red)}
+</style>
+</head>
+<body>
+
+<div class="embed-tabs">
+<button class="embed-tab active" onclick="switchEmbed('odds')">🏆 冠军赔率</button>
+<button class="embed-tab" onclick="switchEmbed('matches')">📋 比赛追踪</button>
+<button class="embed-tab" onclick="switchEmbed('analysis')">📊 深度分析</button>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner" style="font-size:.78rem">
+<span>🏗️ <strong>{{ builder.builder_name }}</strong> · Polymarket Builder</span>
+<a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source={{ builder.builder_name }}" target="_blank" rel="noopener" class="btn btn-primary">🔗 在 Polymarket 交易 →</a>
+</div>
+
+<!-- 冠军赔率 -->
+<div id="embed-odds">
+<div class="grid2">
+<div class="card">
+<div class="card-header"><span class="card-title">📊 冠军赔率 Top 16</span><span class="card-badge">{{ data.teams|length if data else 0 }} 队</span></div>
+<table class="odds-table">
+<thead><tr><th>#</th><th>球队</th><th>概率</th><th>趋势</th><th></th></tr></thead>
+<tbody>
+{% if data and data.teams %}
+{% for t in data.teams[:16] %}
+<tr>
+<td>{{ t.rank }}</td><td>{{ t.get('flag','') }} <strong>{{ t.team }}</strong></td>
+<td><span class="prob-bar" style="width:{{ t.prob * 2.5 }}px"></span>{{ "%.1f"|format(t.prob) }}%</td>
+<td>{% if t.trend == 'up' %}<span class="t-up">↑</span>{% elif t.trend == 'down' %}<span class="t-down">↓</span>{% else %}<span class="t-stable">→</span>{% endif %}</td>
+<td><a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source={{ builder.builder_name }}" target="_blank" class="trade-btn">📈 交易</a></td>
+</tr>
+{% endfor %}
+{% endif %}
+</tbody>
+</table>
+</div>
+<div>
+<div class="overview-cards">
+<div class="ov-card"><div class="label">总交易量</div><div class="value">{{ data.total_volume if data else 'N/A' }}</div></div>
+<div class="ov-card"><div class="label">领先</div><div class="value">{% if data and data.teams %}{{ data.teams[0].flag }} {{ data.teams[0].team }}{% endif %}</div></div>
+<div class="ov-card"><div class="label">概率</div><div class="value">{% if data and data.teams %}{{ "%.1f"|format(data.teams[0].prob) }}%{% endif %}</div></div>
+<div class="ov-card"><div class="label">更新</div><div class="value" style="font-size:.8rem">{{ data.updated if data else '--' }}</div></div>
+</div>
+<div class="card mt-8">
+<div class="card-header"><span class="card-title">📊 概率对比 Top 10</span></div>
+<div class="chart-wrap tall"><canvas id="barChart"></canvas></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 比赛追踪 -->
+<div id="embed-matches" class="hidden">
+<div class="overview-cards mb-8">
+<div class="ov-card"><div class="label">已追踪</div><div class="value">{{ data.matches|length if data else 0 }} / 104</div></div>
+<div class="ov-card"><div class="label">热门命中</div><div class="value text-up">{{ stats.fav_wins }} / {{ data.matches|length if data else 1 }}</div></div>
+<div class="ov-card"><div class="label">热门翻车</div><div class="value text-down">{{ stats.fav_losses }} / {{ data.matches|length if data else 1 }}</div></div>
+<div class="ov-card"><div class="label">命中率</div><div class="value">{{ stats.fav_win_rate }}%</div></div>
+</div>
+{% if data and data.matches %}
+{% for m in data.matches[-20:]|reverse %}
+<div class="match-card {% if m.favorite_won %}fav-won{% else %}upset{% endif %}">
+<span style="text-align:right;font-weight:600">{{ m.home }}</span>
+<div style="text-align:center"><div class="match-score">{{ m.score }}</div><div style="font-size:.65rem;color:var(--dim)">{{ m.date }}</div></div>
+<span style="text-align:left;font-weight:600">{{ m.away }}</span>
+<div style="text-align:center">
+<div class="match-pred {% if m.favorite_won %}correct{% else %}wrong{% endif %}">{% if m.favorite_won %}✅{% else %}🔥{% endif %} {{ m.favorite }} {{ m.favorite_prob }}%</div>
+<a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source={{ builder.builder_name }}" target="_blank" class="trade-btn" style="display:inline-block;margin-top:3px">📈 交易</a>
+</div>
+</div>
+{% endfor %}
+{% endif %}
+</div>
+
+<!-- 深度分析 -->
+<div id="embed-analysis" class="hidden">
+<div class="card">
+<div class="card-header"><span class="card-title">📐 Brier Score</span></div>
+<div style="display:flex;align-items:center;gap:12px">
+{% if data and data.analysis %}
+<div class="brier-value bad">{{ "%.3f"|format(data.analysis.brier_score) }}</div>
+<div style="font-size:.75rem;color:var(--dim)">基线: {{ "%.2f"|format(data.analysis.brier_baseline) }}<br>{{ data.analysis.summary[:100] }}...</div>
+{% endif %}
+</div>
+</div>
+{% if data and data.analysis and data.analysis.tiers %}
+<div class="grid4 mb-8">
+{% for tier in data.analysis.tiers %}
+<div class="tier-card {{ tier.color }}">
+<div class="tier-label">{{ tier.label }}</div>
+<div class="tier-rate" style="color:{% if tier.rate >= 70 %}var(--green){% elif tier.rate <= 40 %}var(--red){% else %}var(--yellow){% endif %}">{{ "%.0f"|format(tier.rate) }}%</div>
+<div class="tier-count">{{ tier.wins }}/{{ tier.count }} {{ tier.examples }}</div>
+</div>
+{% endfor %}
+</div>
+{% endif %}
+<div class="card"><div class="chart-wrap tall"><canvas id="tierChart"></canvas></div></div>
+</div>
+
+<script>
+function switchEmbed(tab){
+  document.querySelectorAll('.embed-tab').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('embed-odds').classList.toggle('hidden',tab!=='odds');
+  document.getElementById('embed-matches').classList.toggle('hidden',tab!=='matches');
+  document.getElementById('embed-analysis').classList.toggle('hidden',tab!=='analysis');
+}
+
+// Charts (safe, non-blocking)
+(function(){
+  if(typeof Chart==='undefined')return;
+  try{
+    {% if data and data.teams %}
+    var top10={{ data.teams[:10]|reverse|list|tojson }};
+    var colors=top10.map(function(t){return t.trend==='up'?'#22c55e':t.trend==='down'?'#ef4444':'#3b82f6';});
+    new Chart(document.getElementById('barChart'),{type:'bar',data:{
+      labels:top10.map(function(t){return (t.flag||'')+' '+t.team;}),
+      datasets:[{label:'冠军概率 (%)',data:top10.map(function(t){return t.prob;}),backgroundColor:colors.map(function(c){return c+'33';}),borderColor:colors,borderWidth:1.5,borderRadius:3}]
+    },options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{max:Math.max.apply(null,top10.map(function(t){return t.prob;}))*1.2,grid:{color:'rgba(42,45,58,.5)'}},y:{grid:{display:false}}}}});
+    {% endif %}
+    {% if data and data.analysis and data.analysis.tiers %}
+    var tiers={{ data.analysis.tiers|tojson }};
+    var clrs={super:'#ef4444',strong:'#3b82f6',mild:'#f59e0b',weak:'#f97316'};
+    new Chart(document.getElementById('tierChart'),{type:'bar',data:{
+      labels:tiers.map(function(t){return t.label;}),
+      datasets:[
+        {label:'热门获胜率 (%)',data:tiers.map(function(t){return t.rate;}),backgroundColor:tiers.map(function(t){return clrs[t.color]+'44';}),borderColor:tiers.map(function(t){return clrs[t.color];}),borderWidth:1.5,borderRadius:4},
+        {type:'line',label:'抛硬币基线',data:[50,50,50,50],borderColor:'#8b8fa3',borderWidth:1.5,borderDash:[5,3],pointRadius:0,fill:false}
+      ]
+    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#e1e4ed',usePointStyle:true}}},
+      scales:{x:{grid:{display:false}},y:{max:110,grid:{color:'rgba(42,45,58,.5)'},ticks:{callback:function(v){return v+'%';}}}}}});
+    {% endif %}
+  }catch(e){console.warn('Chart error:',e);}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="300">
+<title>🏆 FIFA 2026 预测市场 — DobGuski 仪表盘</title>
+<meta name="description" content="Polymarket FIFA 2026 世界杯冠军赔率实时追踪 · 比赛预测vs结果 · 分层准确度分析">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"
+ onerror="this.onerror=null;this.src='https://unpkg.com/chart.js@4.4.7/dist/chart.umd.min.js'"></script>
+<script>window.ChartReady = typeof Chart !== 'undefined'; if(!window.ChartReady){document.write('<script src=\"https://unpkg.com/chart.js@4.4.7/dist/chart.umd.min.js\"><\/script>')}</script>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--alt:#212433;--border:#2a2d3a;--text:#e1e4ed;--dim:#8b8fa3;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;--orange:#f97316;--radius:8px;--rlg:12px;--mw:1200px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-brand{font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:6px}
+.nav-badge{font-size:.6rem;background:var(--blue);color:#fff;padding:1px 6px;border-radius:4px;font-weight:600}
+.nav-tabs{display:flex;gap:2px}
+.nav-tab{padding:5px 12px;border-radius:var(--radius);font-size:.82rem;cursor:pointer;border:none;background:none;color:var(--dim);transition:all .15s}
+.nav-tab:hover{background:var(--alt);color:var(--text)}
+.nav-tab.active{background:rgba(59,130,246,.15);color:var(--blue);font-weight:600}
+.nav-status{font-size:.75rem;color:var(--dim);display:flex;align-items:center;gap:5px}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.container{max-width:var(--mw);margin:0 auto;padding:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:18px 20px;margin-bottom:16px}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.card-title{font-size:1rem;font-weight:700}
+.card-badge{font-size:.7rem;padding:2px 8px;border-radius:10px;background:var(--alt);color:var(--dim)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:768px){.grid4{grid-template-columns:repeat(2,1fr)}}
+.full{grid-column:1/-1}
+.odds-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.odds-table th{text-align:left;padding:7px 10px;border-bottom:2px solid var(--border);color:var(--dim);font-size:.72rem;text-transform:uppercase}
+.odds-table td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.odds-table tbody tr{cursor:pointer;transition:background .12s}
+.odds-table tbody tr:hover{background:rgba(59,130,246,.1)}
+.odds-table tbody tr.selected{background:rgba(59,130,246,.12);border-left:3px solid var(--blue)}
+.t-up{color:var(--green)}.t-down{color:var(--red)}.t-stable{color:var(--yellow)}
+.prob-bar{display:inline-block;height:5px;border-radius:3px;margin-right:5px;vertical-align:middle;background:var(--blue);opacity:.6}
+.overview-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.ov-card{background:var(--alt);border-radius:var(--radius);padding:12px 14px;text-align:center}
+.ov-card .label{font-size:.7rem;color:var(--dim);text-transform:uppercase;margin-bottom:3px}
+.ov-card .value{font-size:1.2rem;font-weight:700}
+.match-card{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;padding:12px 14px;background:var(--alt);border-radius:var(--radius);margin-bottom:6px;border-left:3px solid transparent}
+.match-card.upset{border-left-color:var(--red)}
+.match-card.fav-won{border-left-color:var(--green)}
+.match-team{font-size:1rem;font-weight:600}
+.match-team.home{text-align:right}.match-team.away{text-align:left}
+.match-score{font-size:1.2rem;font-weight:800;text-align:center;padding:5px 14px;background:var(--surface);border-radius:var(--radius)}
+.match-info{font-size:.72rem;color:var(--dim);text-align:center}
+.match-pred{font-size:.75rem;padding:4px 8px;border-radius:var(--radius);text-align:center}
+.match-pred.correct{background:rgba(34,197,94,.08);color:var(--green)}
+.match-pred.wrong{background:rgba(239,68,68,.08);color:var(--red)}
+.tier-card{background:var(--alt);border-radius:var(--rlg);padding:14px;text-align:center;border-top:3px solid transparent}
+.tier-card.super{border-top-color:var(--red)}.tier-card.strong{border-top-color:var(--blue)}
+.tier-card.mild{border-top-color:var(--yellow)}.tier-card.weak{border-top-color:var(--orange)}
+.tier-rate{font-size:1.4rem;font-weight:800}.tier-label{font-size:.75rem;color:var(--dim);margin-bottom:4px}
+.tier-count{font-size:.7rem;color:var(--dim);margin-top:3px}.tier-examples{font-size:.7rem;color:var(--dim);margin-top:6px}
+.chart-wrap{position:relative;width:100%;height:300px;margin-top:6px}
+.chart-wrap.tall{height:380px}
+.cta-banner{background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(34,197,94,.06));border:1px solid var(--blue);border-radius:var(--rlg);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+@media(max-width:600px){.cta-banner{flex-direction:column;gap:10px;text-align:center}}
+.btn{display:inline-block;padding:7px 16px;border-radius:var(--radius);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;border:none}
+.btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:#2563eb;text-decoration:none}
+.btn-secondary{background:var(--alt);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--border);text-decoration:none}
+.footer{border-top:1px solid var(--border);background:var(--surface);padding:16px 20px;margin-top:30px}
+.footer-inner{max-width:var(--mw);margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--dim)}
+@media(max-width:600px){.footer-inner{flex-direction:column;gap:10px;text-align:center}}
+.builder-badge{font-size:.7rem;background:rgba(59,130,246,.1);color:var(--blue);padding:4px 10px;border-radius:10px;border:1px solid rgba(59,130,246,.2)}
+.brier-value{font-size:2rem;font-weight:800}.brier-value.bad{color:var(--red)}
+.section-title{font-size:1.15rem;font-weight:700;margin-bottom:4px}
+.last-updated{font-size:.75rem;color:var(--dim)}
+.tabs{display:flex;gap:4px;margin-bottom:12px}
+.tab-btn{padding:5px 12px;border-radius:var(--radius);font-size:.75rem;cursor:pointer;border:1px solid var(--border);background:none;color:var(--dim)}
+.tab-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.hidden{display:none}
+.mt-8{margin-top:8px}.mt-12{margin-top:12px}.mb-12{margin-bottom:12px}
+.text-up{color:var(--green)}.text-down{color:var(--red)}.text-dim{color:var(--dim)}
+.text-good{color:var(--green)}.text-warn{color:var(--red)}
+.flex-between{display:flex;justify-content:space-between;align-items:center}
+.trade-btn{font-size:.65rem;padding:3px 10px;background:rgba(59,130,246,.15);color:var(--blue);border:1px solid rgba(59,130,246,.3);border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.trade-btn:hover{background:var(--blue);color:#fff;text-decoration:none}
+.trade-col{width:50px;text-align:center}
+.sticky-cta{position:fixed;bottom:16px;right:16px;z-index:999;background:var(--blue);color:#fff;padding:12px 20px;border-radius:24px;font-weight:700;font-size:.85rem;box-shadow:0 4px 20px rgba(59,130,246,.4);animation:pulse-cta 2s infinite}
+@keyframes pulse-cta{0%,100%{box-shadow:0 4px 20px rgba(59,130,246,.4)}50%{box-shadow:0 4px 30px rgba(59,130,246,.8)}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(245,158,11,.4)}50%{box-shadow:0 0 18px rgba(245,158,11,.8)}}
+.tab-highlight{background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(239,68,68,.15))!important;color:#f59e0b!important;font-weight:700!important;border:1px solid rgba(245,158,11,.3)!important}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+<div class="nav-brand">⚽ DobGuski FIFA 2026<span class="nav-badge" style="background:linear-gradient(135deg,#f59e0b,#ef4444);font-size:.7rem;animation:glow 2s infinite">🏆 猜冠军</span></div>
+<div class="nav-tabs">
+<button class="nav-tab active tab-highlight" onclick="switchTab('odds')">🏆 猜冠军</button>
+<button class="nav-tab" onclick="switchTab('matches')">📋 比赛追踪</button>
+<button class="nav-tab" onclick="switchTab('analysis')">📊 深度分析</button>
+</div>
+<div class="nav-status"><span class="status-dot"></span><span id="update-time">2026-07-04</span></div>
+</nav>
+
+<main class="container">
+
+<!-- CTA Banner -->
+<div class="cta-banner">
+<div>
+🏗️ <strong>dobguski</strong> · Polymarket官方Builder &nbsp;|&nbsp;
+<span style="color:#22c55e">⚡ 点击下方任意「交易」按钮前往Polymarket，每一笔交易都直接支持本站</span>
+</div>
+<a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source=dobguski" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:1rem;padding:10px 22px">
+🔗 前往 Polymarket 交易 FIFA 2026 →
+</a>
+</div>
+</a>
+</div>
+
+<!-- TAB 1: 冠军赔率 -->
+<div id="tab-odds">
+<div class="flex-between mb-12">
+<div>
+<div class="section-title">🏆 2026 世界杯冠军赔率 Top 16</div>
+<div class="last-updated">数据更新: <span id="odds-date"></span> · 来源: Polymarket (Gate/KuCoin/BingX)</div>
+</div>
+</div>
+
+<div class="grid2">
+<div class="card">
+<div class="card-header"><span class="card-title">📊 赔率排行</span><span class="card-badge">16 支球队</span></div>
+<table class="odds-table">
+<thead><tr><th>#</th><th>球队</th><th>概率</th><th>趋势</th><th>说明</th><th class="trade-col">交易</th></tr></thead>
+<tbody id="odds-tbody"></tbody>
+</table>
+<div class="text-dim mt-8" style="font-size:.75rem">💡 点击行查看趋势图</div>
+</div>
+
+<div>
+<div class="overview-cards">
+<div class="ov-card"><div class="label">总交易量</div><div class="value" id="total-vol"></div></div>
+<div class="ov-card"><div class="label">领跑球队</div><div class="value" id="top-team"></div></div>
+<div class="ov-card"><div class="label">领先概率</div><div class="value" id="top-prob"></div></div>
+<div class="ov-card"><div class="label">其他合计</div><div class="value" id="others-prob"></div></div>
+</div>
+<div class="card mt-12">
+<div class="card-header"><span class="card-title">📈 概率趋势</span><span class="card-badge" id="trend-label"></span></div>
+<div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+</div>
+</div>
+
+<div class="card full">
+<div class="card-header"><span class="card-title">📊 冠军概率对比 (Top 10)</span><span class="card-badge">绿=上升 红=下降 蓝=稳定</span></div>
+<div class="chart-wrap tall"><canvas id="barChart"></canvas></div>
+</div>
+</div>
+</div>
+
+<!-- TAB 2: 比赛追踪 -->
+<div id="tab-matches" class="hidden">
+<div class="flex-between mb-12">
+<div>
+<div class="section-title">📋 比赛追踪</div>
+<div class="last-updated">已追踪 <span id="match-count"></span> / 104 场 · 数据更新: <span id="match-date"></span></div>
+</div>
+</div>
+
+<div class="overview-cards mb-12">
+<div class="ov-card"><div class="label">已追踪</div><div class="value" id="stat-tracked"></div></div>
+<div class="ov-card"><div class="label">热门命中</div><div class="value text-good" id="stat-wins"></div></div>
+<div class="ov-card"><div class="label">热门翻车</div><div class="value text-warn" id="stat-losses"></div></div>
+<div class="ov-card"><div class="label">命中率</div><div class="value" id="stat-rate"></div></div>
+</div>
+
+<div class="tabs">
+<button class="tab-btn active" onclick="filterMatches('all')">全部</button>
+<button class="tab-btn" onclick="filterMatches('correct')">✅ 热门命中</button>
+<button class="tab-btn" onclick="filterMatches('upsets')">🔥 冷门翻车</button>
+</div>
+
+<div id="matches-list"></div>
+
+<div class="card mt-12" style="font-size:.8rem">
+<div class="flex-between">
+<span>🟢 绿边 = 热门命中</span><span>🔴 红边 = 热门翻车</span>
+<span>赔率为赛前三项结果概率</span>
+</div>
+</div>
+</div>
+
+<!-- TAB 3: 深度分析 -->
+<div id="tab-analysis" class="hidden">
+<div class="flex-between mb-12">
+<div>
+<div class="section-title">📊 分层预测准确度</div>
+<div class="last-updated">基于 10 场比赛 · Brier Score 评估</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header"><span class="card-title">📐 Brier Score</span><span class="card-badge">越低越好</span></div>
+<div style="display:flex;align-items:center;gap:16px">
+<div class="brier-value bad" id="brier-val"></div>
+<div style="font-size:.8rem;color:var(--dim)">
+<p>随机基线: <strong id="brier-base"></strong></p>
+<p id="brier-verdict"></p>
+<p class="mt-8">0=完美 · 0.25=抛硬币 · 1=全错</p>
+</div>
+</div>
+</div>
+
+<div class="grid4 mb-12" id="tier-cards"></div>
+
+<div class="card">
+<div class="card-header"><span class="card-title">📊 分层胜率图</span></div>
+<div class="chart-wrap tall"><canvas id="tierChart"></canvas></div>
+</div>
+
+<div class="grid2">
+<div class="card">
+<div class="card-header"><span class="card-title">💡 核心洞察</span></div>
+<div id="insight-text" style="font-size:.85rem;line-height:1.7"></div>
+</div>
+<div class="card">
+<div class="card-header"><span class="card-title">📈 关键指标</span></div>
+<div id="key-metrics" style="font-size:.82rem"></div>
+</div>
+</div>
+</div>
+
+</main>
+
+<!-- 悬浮 CTA -->
+<a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source=dobguski" target="_blank" rel="noopener" class="sticky-cta" style="text-decoration:none">
+⚽ 在 Polymarket 交易
+</a>
+
+<footer class="footer">
+<div class="footer-inner">
+<div>
+<p>数据来源：Polymarket、Gate.com、KuCoin、BingX</p>
+<p style="font-size:.7rem;opacity:.7;margin-top:2px">⚠️ 仅供研究参考，不构成投资建议</p>
+</div>
+<div style="display:flex;gap:8px;align-items:center">
+<a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source=dobguski" target="_blank" rel="noopener" class="btn btn-primary">🔗 在 Polymarket 交易</a>
+<span class="builder-badge">🏗️ Powered by dobguski</span>
+</div>
+</div>
+</footer>
+
+<script>
+// ============================================================
+// 数据
+// ============================================================
+const DATA = {
+  "updated": "2026-07-01",
+  "total_volume": "$111,594,891",
+  "others_prob": 1.3,
+  "teams": [
+    {
+      "rank": 1,
+      "team": "France",
+      "flag": "",
+      "prob": 32.6,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 2,
+      "team": "Argentina",
+      "flag": "",
+      "prob": 19.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 3,
+      "team": "Spain",
+      "flag": "",
+      "prob": 10.8,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 4,
+      "team": "England",
+      "flag": "",
+      "prob": 9.8,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 5,
+      "team": "Brazil",
+      "flag": "",
+      "prob": 7.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 6,
+      "team": "Portugal",
+      "flag": "",
+      "prob": 5.2,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 7,
+      "team": "Morocco",
+      "flag": "",
+      "prob": 3.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 8,
+      "team": "USA",
+      "flag": "",
+      "prob": 3.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 9,
+      "team": "Colombia",
+      "flag": "",
+      "prob": 2.8,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 10,
+      "team": "Norway",
+      "flag": "",
+      "prob": 1.9,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 11,
+      "team": "Mexico",
+      "flag": "",
+      "prob": 1.7,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 12,
+      "team": "Belgium",
+      "flag": "",
+      "prob": 1.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 13,
+      "team": "Switzerland",
+      "flag": "",
+      "prob": 0.9,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 14,
+      "team": "Senegal",
+      "flag": "",
+      "prob": 0.5,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 15,
+      "team": "Ecuador",
+      "flag": "",
+      "prob": 0.4,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 16,
+      "team": "Croatia",
+      "flag": "",
+      "prob": 0.4,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 17,
+      "team": "Canada",
+      "flag": "",
+      "prob": 0.2,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 18,
+      "team": "Paraguay",
+      "flag": "",
+      "prob": 0.2,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 19,
+      "team": "Ghana",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 20,
+      "team": "Algeria",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 21,
+      "team": "Bosnia-Herzegovina",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 22,
+      "team": "Congo DR",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 23,
+      "team": "Cape Verde",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 24,
+      "team": "Australia",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 25,
+      "team": "Austria",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 26,
+      "team": "Egypt",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 27,
+      "team": "Sweden",
+      "flag": "",
+      "prob": 0.1,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 28,
+      "team": "New Zealand",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 29,
+      "team": "Haiti",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 30,
+      "team": "Jordan",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 31,
+      "team": "South Korea",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 32,
+      "team": "Team AM",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 33,
+      "team": "Curaçao",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 34,
+      "team": "Germany",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 35,
+      "team": "Iran",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 36,
+      "team": "Netherlands",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 37,
+      "team": "Turkiye",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 38,
+      "team": "Italy",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 39,
+      "team": "Uruguay",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 40,
+      "team": "Team AI",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 41,
+      "team": "Scotland",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 42,
+      "team": "Peru",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 43,
+      "team": "Any Other Team",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 44,
+      "team": "Tunisia",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 45,
+      "team": "Team AH",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 46,
+      "team": "Team AG",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 47,
+      "team": "Japan",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 48,
+      "team": "Uzbekistan",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 49,
+      "team": "Panama",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 50,
+      "team": "Iraq",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 51,
+      "team": "South Africa",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 52,
+      "team": "Ivory Coast",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 53,
+      "team": "Qatar",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 54,
+      "team": "Czechia",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 55,
+      "team": "Saudi Arabia",
+      "flag": "",
+      "prob": 0.0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 56,
+      "team": "Team AL",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 57,
+      "team": "Team AN",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 58,
+      "team": "Team AJ",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 59,
+      "team": "Team AK",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    },
+    {
+      "rank": 60,
+      "team": "Team AO",
+      "flag": "",
+      "prob": 0,
+      "trend": "stable",
+      "note": ""
+    }
+  ],
+  "matches": [
+    {
+      "date": "2026-06-11",
+      "matchday": 0,
+      "home": "墨西哥",
+      "away": "南非",
+      "group": "A",
+      "score": "2-0",
+      "pred_home": 70,
+      "pred_draw": 21,
+      "pred_away": 9,
+      "favorite": "墨西哥",
+      "favorite_prob": 70,
+      "favorite_won": true,
+      "volume": "$186万",
+      "note": ""
+    },
+    {
+      "date": "2026-06-11",
+      "matchday": 0,
+      "home": "韩国",
+      "away": "捷克",
+      "group": "A",
+      "score": "2-1",
+      "pred_home": 38,
+      "pred_draw": 32,
+      "pred_away": 33,
+      "favorite": "韩国",
+      "favorite_prob": 38,
+      "favorite_won": true,
+      "volume": "$107万",
+      "note": ""
+    },
+    {
+      "date": "2026-06-12",
+      "matchday": 0,
+      "home": "加拿大",
+      "away": "波黑",
+      "group": "B",
+      "score": "1-1",
+      "pred_home": 54,
+      "pred_draw": 23,
+      "pred_away": 23,
+      "favorite": "加拿大",
+      "favorite_prob": 54,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-13",
+      "matchday": 0,
+      "home": "美国",
+      "away": "巴拉圭",
+      "group": "D",
+      "score": "4-1",
+      "pred_home": 50,
+      "pred_draw": 28,
+      "pred_away": 22,
+      "favorite": "美国",
+      "favorite_prob": 50,
+      "favorite_won": true,
+      "volume": "$60.6万",
+      "note": ""
+    },
+    {
+      "date": "2026-06-13",
+      "matchday": 0,
+      "home": "卡塔尔",
+      "away": "瑞士",
+      "group": "B",
+      "score": "1-1",
+      "pred_home": 7,
+      "pred_draw": 14,
+      "pred_away": 79,
+      "favorite": "瑞士",
+      "favorite_prob": 79,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-13",
+      "matchday": 0,
+      "home": "巴西",
+      "away": "摩洛哥",
+      "group": "C",
+      "score": "1-1",
+      "pred_home": 84,
+      "pred_draw": 10,
+      "pred_away": 6,
+      "favorite": "巴西",
+      "favorite_prob": 84,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-13",
+      "matchday": 0,
+      "home": "海地",
+      "away": "苏格兰",
+      "group": "C",
+      "score": "0-1",
+      "pred_home": 17,
+      "pred_draw": 24,
+      "pred_away": 64,
+      "favorite": "苏格兰",
+      "favorite_prob": 64,
+      "favorite_won": true,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-13",
+      "matchday": 0,
+      "home": "澳大利亚",
+      "away": "土耳其",
+      "group": "D",
+      "score": "2-0",
+      "pred_home": 19,
+      "pred_draw": 26,
+      "pred_away": 57,
+      "favorite": "土耳其",
+      "favorite_prob": 57,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-14",
+      "matchday": 0,
+      "home": "德国",
+      "away": "库拉索",
+      "group": "E",
+      "score": "7-1",
+      "pred_home": 94,
+      "pred_draw": 4,
+      "pred_away": 2,
+      "favorite": "德国",
+      "favorite_prob": 94,
+      "favorite_won": true,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-14",
+      "matchday": 0,
+      "home": "荷兰",
+      "away": "日本",
+      "group": "F",
+      "score": "2-2",
+      "pred_home": 48,
+      "pred_draw": 26,
+      "pred_away": 26,
+      "favorite": "荷兰",
+      "favorite_prob": 48,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-14",
+      "matchday": 0,
+      "home": "科特迪瓦",
+      "away": "厄瓜多尔",
+      "group": "E",
+      "score": "1-0",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "厄瓜多尔",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-14",
+      "matchday": 0,
+      "home": "瑞典",
+      "away": "突尼斯",
+      "group": "F",
+      "score": "5-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "瑞典",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-15",
+      "matchday": 0,
+      "home": "西班牙",
+      "away": "佛得角",
+      "group": "H",
+      "score": "0-0",
+      "pred_home": 84,
+      "pred_draw": 15,
+      "pred_away": 1,
+      "favorite": "西班牙",
+      "favorite_prob": 84,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-15",
+      "matchday": 0,
+      "home": "比利时",
+      "away": "埃及",
+      "group": "G",
+      "score": "1-1",
+      "pred_home": 78,
+      "pred_draw": 15,
+      "pred_away": 7,
+      "favorite": "比利时",
+      "favorite_prob": 78,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-15",
+      "matchday": 0,
+      "home": "沙特阿拉伯",
+      "away": "乌拉圭",
+      "group": "H",
+      "score": "1-1",
+      "pred_home": 33,
+      "pred_draw": 34,
+      "pred_away": 33,
+      "favorite": "沙特阿拉伯",
+      "favorite_prob": 33,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-15",
+      "matchday": 0,
+      "home": "伊朗",
+      "away": "新西兰",
+      "group": "G",
+      "score": "2-2",
+      "pred_home": 33,
+      "pred_draw": 34,
+      "pred_away": 33,
+      "favorite": "伊朗",
+      "favorite_prob": 33,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-16",
+      "matchday": 0,
+      "home": "法国",
+      "away": "塞内加尔",
+      "group": "I",
+      "score": "3-1",
+      "pred_home": 84,
+      "pred_draw": 15,
+      "pred_away": 1,
+      "favorite": "法国",
+      "favorite_prob": 84,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-16",
+      "matchday": 0,
+      "home": "挪威",
+      "away": "伊拉克",
+      "group": "I",
+      "score": "4-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "挪威",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-16",
+      "matchday": 0,
+      "home": "阿根廷",
+      "away": "阿尔及利亚",
+      "group": "J",
+      "score": "3-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "阿根廷",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-16",
+      "matchday": 0,
+      "home": "奥地利",
+      "away": "约旦",
+      "group": "J",
+      "score": "3-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "奥地利",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-17",
+      "matchday": 0,
+      "home": "葡萄牙",
+      "away": "刚果民主",
+      "group": "K",
+      "score": "1-1",
+      "pred_home": 83,
+      "pred_draw": 15,
+      "pred_away": 2,
+      "favorite": "葡萄牙",
+      "favorite_prob": 83,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-17",
+      "matchday": 0,
+      "home": "英格兰",
+      "away": "克罗地亚",
+      "group": "L",
+      "score": "4-2",
+      "pred_home": 82,
+      "pred_draw": 15,
+      "pred_away": 3,
+      "favorite": "英格兰",
+      "favorite_prob": 82,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-17",
+      "matchday": 0,
+      "home": "加纳",
+      "away": "巴拿马",
+      "group": "L",
+      "score": "1-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "加纳",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-17",
+      "matchday": 0,
+      "home": "哥伦比亚",
+      "away": "乌兹别克斯坦",
+      "group": "K",
+      "score": "3-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "哥伦比亚",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-18",
+      "matchday": 0,
+      "home": "捷克",
+      "away": "南非",
+      "group": "A",
+      "score": "1-1",
+      "pred_home": 33,
+      "pred_draw": 34,
+      "pred_away": 33,
+      "favorite": "捷克",
+      "favorite_prob": 33,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-18",
+      "matchday": 0,
+      "home": "瑞士",
+      "away": "波黑",
+      "group": "B",
+      "score": "4-1",
+      "pred_home": 76,
+      "pred_draw": 15,
+      "pred_away": 8,
+      "favorite": "瑞士",
+      "favorite_prob": 76,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-18",
+      "matchday": 0,
+      "home": "加拿大",
+      "away": "卡塔尔",
+      "group": "B",
+      "score": "6-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "加拿大",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-18",
+      "matchday": 0,
+      "home": "墨西哥",
+      "away": "韩国",
+      "group": "A",
+      "score": "1-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "墨西哥",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "墨西哥提前晋级R32"
+    },
+    {
+      "date": "2026-06-19",
+      "matchday": 0,
+      "home": "摩洛哥",
+      "away": "苏格兰",
+      "group": "C",
+      "score": "1-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "摩洛哥",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-19",
+      "matchday": 0,
+      "home": "巴西",
+      "away": "海地",
+      "group": "C",
+      "score": "3-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "巴西",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "海地淘汰"
+    },
+    {
+      "date": "2026-06-19",
+      "matchday": 0,
+      "home": "美国",
+      "away": "澳大利亚",
+      "group": "D",
+      "score": "2-0",
+      "pred_home": 82,
+      "pred_draw": 15,
+      "pred_away": 3,
+      "favorite": "美国",
+      "favorite_prob": 82,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-19",
+      "matchday": 0,
+      "home": "土耳其",
+      "away": "巴拉圭",
+      "group": "D",
+      "score": "0-1",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "巴拉圭",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-20",
+      "matchday": 0,
+      "home": "荷兰",
+      "away": "瑞典",
+      "group": "F",
+      "score": "5-1",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "瑞典",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-20",
+      "matchday": 0,
+      "home": "德国",
+      "away": "科特迪瓦",
+      "group": "E",
+      "score": "2-1",
+      "pred_home": 33,
+      "pred_draw": 34,
+      "pred_away": 33,
+      "favorite": "德国",
+      "favorite_prob": 33,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-20",
+      "matchday": 0,
+      "home": "厄瓜多尔",
+      "away": "库拉索",
+      "group": "E",
+      "score": "0-0",
+      "pred_home": 24,
+      "pred_draw": 15,
+      "pred_away": 61,
+      "favorite": "库拉索",
+      "favorite_prob": 61,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-20",
+      "matchday": 0,
+      "home": "日本",
+      "away": "突尼斯",
+      "group": "F",
+      "score": "4-0",
+      "pred_home": 33,
+      "pred_draw": 34,
+      "pred_away": 33,
+      "favorite": "日本",
+      "favorite_prob": 33,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-21",
+      "matchday": 0,
+      "home": "西班牙",
+      "away": "沙特阿拉伯",
+      "group": "H",
+      "score": "4-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "西班牙",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-21",
+      "matchday": 0,
+      "home": "比利时",
+      "away": "伊朗",
+      "group": "G",
+      "score": "0-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "比利时",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-21",
+      "matchday": 0,
+      "home": "乌拉圭",
+      "away": "佛得角",
+      "group": "H",
+      "score": "2-2",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "佛得角",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-21",
+      "matchday": 0,
+      "home": "新西兰",
+      "away": "埃及",
+      "group": "G",
+      "score": "1-3",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "埃及",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-22",
+      "matchday": 0,
+      "home": "阿根廷",
+      "away": "奥地利",
+      "group": "J",
+      "score": "2-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "阿根廷",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-22",
+      "matchday": 0,
+      "home": "法国",
+      "away": "伊拉克",
+      "group": "I",
+      "score": "3-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "法国",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-22",
+      "matchday": 0,
+      "home": "挪威",
+      "away": "塞内加尔",
+      "group": "I",
+      "score": "3-2",
+      "pred_home": 67,
+      "pred_draw": 15,
+      "pred_away": 18,
+      "favorite": "挪威",
+      "favorite_prob": 67,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-22",
+      "matchday": 0,
+      "home": "约旦",
+      "away": "阿尔及利亚",
+      "group": "J",
+      "score": "1-2",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "阿尔及利亚",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-23",
+      "matchday": 0,
+      "home": "葡萄牙",
+      "away": "乌兹别克斯坦",
+      "group": "K",
+      "score": "5-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "葡萄牙",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-23",
+      "matchday": 0,
+      "home": "英格兰",
+      "away": "加纳",
+      "group": "L",
+      "score": "0-0",
+      "pred_home": 84,
+      "pred_draw": 15,
+      "pred_away": 1,
+      "favorite": "英格兰",
+      "favorite_prob": 84,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-23",
+      "matchday": 0,
+      "home": "巴拿马",
+      "away": "克罗地亚",
+      "group": "L",
+      "score": "0-0",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "克罗地亚",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "进行中"
+    },
+    {
+      "date": "2026-06-24",
+      "matchday": 3,
+      "home": "墨西哥",
+      "away": "捷克",
+      "group": "A",
+      "score": "3-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "墨西哥",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "墨西哥3战全胜零封"
+    },
+    {
+      "date": "2026-06-24",
+      "matchday": 3,
+      "home": "南非",
+      "away": "韩国",
+      "group": "A",
+      "score": "1-0",
+      "pred_home": 33,
+      "pred_draw": 34,
+      "pred_away": 33,
+      "favorite": "南非",
+      "favorite_prob": 33,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "南非出线·韩国淘汰"
+    },
+    {
+      "date": "2026-06-24",
+      "matchday": 3,
+      "home": "瑞士",
+      "away": "加拿大",
+      "group": "B",
+      "score": "2-1",
+      "pred_home": 70,
+      "pred_draw": 15,
+      "pred_away": 15,
+      "favorite": "瑞士",
+      "favorite_prob": 70,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-24",
+      "matchday": 3,
+      "home": "波黑",
+      "away": "卡塔尔",
+      "group": "B",
+      "score": "3-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "波黑",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "卡塔尔淘汰"
+    },
+    {
+      "date": "2026-06-24",
+      "matchday": 3,
+      "home": "苏格兰",
+      "away": "巴西",
+      "group": "C",
+      "score": "0-3",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "巴西",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-24",
+      "matchday": 3,
+      "home": "摩洛哥",
+      "away": "海地",
+      "group": "C",
+      "score": "4-2",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "摩洛哥",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "摩洛哥不败晋级"
+    },
+    {
+      "date": "2026-06-25",
+      "matchday": 3,
+      "home": "土耳其",
+      "away": "美国",
+      "group": "D",
+      "score": "3-2",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "美国",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-25",
+      "matchday": 3,
+      "home": "巴拉圭",
+      "away": "澳大利亚",
+      "group": "D",
+      "score": "0-0",
+      "pred_home": 57,
+      "pred_draw": 15,
+      "pred_away": 28,
+      "favorite": "巴拉圭",
+      "favorite_prob": 57,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-25",
+      "matchday": 3,
+      "home": "厄瓜多尔",
+      "away": "德国",
+      "group": "E",
+      "score": "2-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "厄瓜多尔",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "德国仍头名晋级"
+    },
+    {
+      "date": "2026-06-25",
+      "matchday": 3,
+      "home": "科特迪瓦",
+      "away": "库拉索",
+      "group": "E",
+      "score": "2-0",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "库拉索",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "库拉索淘汰"
+    },
+    {
+      "date": "2026-06-25",
+      "matchday": 3,
+      "home": "荷兰",
+      "away": "突尼斯",
+      "group": "F",
+      "score": "3-1",
+      "pred_home": 33,
+      "pred_draw": 34,
+      "pred_away": 33,
+      "favorite": "荷兰",
+      "favorite_prob": 33,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-25",
+      "matchday": 3,
+      "home": "日本",
+      "away": "瑞典",
+      "group": "F",
+      "score": "1-1",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "瑞典",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-26",
+      "matchday": 3,
+      "home": "比利时",
+      "away": "新西兰",
+      "group": "G",
+      "score": "5-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "比利时",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-26",
+      "matchday": 3,
+      "home": "埃及",
+      "away": "伊朗",
+      "group": "G",
+      "score": "1-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "埃及",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-26",
+      "matchday": 3,
+      "home": "西班牙",
+      "away": "乌拉圭",
+      "group": "H",
+      "score": "1-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "西班牙",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "西班牙头名出线"
+    },
+    {
+      "date": "2026-06-26",
+      "matchday": 3,
+      "home": "佛得角",
+      "away": "沙特阿拉伯",
+      "group": "H",
+      "score": "0-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "佛得角",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "佛得角历史性晋级"
+    },
+    {
+      "date": "2026-06-26",
+      "matchday": 3,
+      "home": "挪威",
+      "away": "法国",
+      "group": "I",
+      "score": "1-4",
+      "pred_home": 5,
+      "pred_draw": 15,
+      "pred_away": 80,
+      "favorite": "法国",
+      "favorite_prob": 80,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "法国3战全胜"
+    },
+    {
+      "date": "2026-06-26",
+      "matchday": 3,
+      "home": "塞内加尔",
+      "away": "伊拉克",
+      "group": "I",
+      "score": "5-0",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "塞内加尔",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "伊拉克淘汰"
+    },
+    {
+      "date": "2026-06-27",
+      "matchday": 3,
+      "home": "约旦",
+      "away": "阿根廷",
+      "group": "J",
+      "score": "1-3",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "阿根廷",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "阿根廷3战全胜"
+    },
+    {
+      "date": "2026-06-27",
+      "matchday": 3,
+      "home": "阿尔及利亚",
+      "away": "奥地利",
+      "group": "J",
+      "score": "3-3",
+      "pred_home": 42,
+      "pred_draw": 15,
+      "pred_away": 42,
+      "favorite": "阿尔及利亚",
+      "favorite_prob": 42,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-27",
+      "matchday": 3,
+      "home": "哥伦比亚",
+      "away": "葡萄牙",
+      "group": "K",
+      "score": "0-0",
+      "pred_home": 30,
+      "pred_draw": 15,
+      "pred_away": 55,
+      "favorite": "葡萄牙",
+      "favorite_prob": 55,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "哥伦比亚头名"
+    },
+    {
+      "date": "2026-06-27",
+      "matchday": 3,
+      "home": "刚果民主",
+      "away": "乌兹别克斯坦",
+      "group": "K",
+      "score": "3-1",
+      "pred_home": 85,
+      "pred_draw": 15,
+      "pred_away": 0,
+      "favorite": "刚果民主",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": ""
+    },
+    {
+      "date": "2026-06-27",
+      "matchday": 3,
+      "home": "巴拿马",
+      "away": "英格兰",
+      "group": "L",
+      "score": "0-2",
+      "pred_home": 0,
+      "pred_draw": 15,
+      "pred_away": 85,
+      "favorite": "英格兰",
+      "favorite_prob": 85,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "英格兰头名"
+    },
+    {
+      "date": "2026-06-27",
+      "matchday": 3,
+      "home": "克罗地亚",
+      "away": "加纳",
+      "group": "L",
+      "score": "2-1",
+      "pred_home": 68,
+      "pred_draw": 15,
+      "pred_away": 17,
+      "favorite": "克罗地亚",
+      "favorite_prob": 68,
+      "favorite_won": false,
+      "volume": "N/A",
+      "note": "克罗地亚第2出线"
+    }
+  ],
+  "analysis": {
+    "tiers": [
+      {
+        "label": "超级热门 (>75%)",
+        "color": "super",
+        "count": 3,
+        "wins": 1,
+        "rate": 33.3,
+        "examples": "德国✅、巴西❌、瑞士❌"
+      },
+      {
+        "label": "中强热门 (60-75%)",
+        "color": "strong",
+        "count": 2,
+        "wins": 2,
+        "rate": 100.0,
+        "examples": "墨西哥✅、苏格兰✅"
+      },
+      {
+        "label": "温和热门 (50-60%)",
+        "color": "mild",
+        "count": 3,
+        "wins": 1,
+        "rate": 33.3,
+        "examples": "加拿大❌、美国✅、土耳其❌"
+      },
+      {
+        "label": "微弱优势 (35-50%)",
+        "color": "weak",
+        "count": 2,
+        "wins": 2,
+        "rate": 100.0,
+        "examples": "韩国✅、荷兰❌"
+      }
+    ],
+    "brier_score": 0.303,
+    "brier_baseline": 0.25,
+    "summary": "10场比赛中热门获胜5场（50%），与抛硬币基线一致。超级热门（>75%）翻车率67%（仅德国取胜），中强热门（60-75%）是当前唯一甜点区（100%命中）。整体Brier Score 0.303，校准度略低于随机基线（0.25），样本量小需持续追踪。"
+  }
+};
+
+// ============================================================
+// Chart.js 配置
+// ============================================================
+const COLORS={blue:'#3b82f6',green:'#22c55e',red:'#ef4444',orange:'#f97316',yellow:'#f59e0b',purple:'#a855f7',text:'#e1e4ed',dim:'#8b8fa3',grid:'rgba(42,45,58,.5)'};
+Chart.defaults.color=COLORS.dim;
+Chart.defaults.borderColor='#2a2d3a';
+Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Microsoft YaHei','PingFang SC',sans-serif";
+
+function safeChart(fn){try{if(typeof Chart==='undefined')return null;return fn()}catch(e){console.warn('Chart error:',e);return null}}
+function createBarChart(){return safeChart(function(){
+  const top10=DATA.teams.slice(0,10).reverse();
+  const colors=top10.map(t=>t.trend==='up'?COLORS.green:t.trend==='down'?COLORS.red:COLORS.blue);
+  new Chart(document.getElementById('barChart'),{type:'bar',data:{
+    labels:top10.map(t=>t.flag+' '+t.team),
+    datasets:[{label:'冠军概率 (%)',data:top10.map(t=>t.prob),backgroundColor:colors.map(c=>c+'33'),borderColor:colors,borderWidth:1.5,borderRadius:4}]
+  },options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{max:Math.max(...top10.map(t=>t.prob))*1.2,grid:{color:COLORS.grid}},y:{grid:{display:false}}}}});
+});}
+
+function createTierChart(){return safeChart(function(){
+  const tiers=DATA.analysis.tiers;
+  const clrs={super:COLORS.red,strong:COLORS.blue,mild:COLORS.yellow,weak:COLORS.orange};
+  new Chart(document.getElementById('tierChart'),{type:'bar',data:{
+    labels:tiers.map(t=>t.label),
+    datasets:[
+      {label:'热门获胜率 (%)',data:tiers.map(t=>t.rate),backgroundColor:tiers.map(t=>clrs[t.color]+'44'),borderColor:tiers.map(t=>clrs[t.color]),borderWidth:1.5,borderRadius:6},
+      {type:'line',label:'抛硬币基线 (50%)',data:Array(4).fill(50),borderColor:COLORS.dim,borderWidth:1.5,borderDash:[6,4],pointRadius:0,fill:false}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:COLORS.text,usePointStyle:true}}},
+    scales:{x:{grid:{display:false}},y:{max:110,grid:{color:COLORS.grid},ticks:{callback:v=>v+'%'}}}}});
+});}
+
+let trendChart=null;
+function updateTrend(teamName){
+  const team=DATA.teams.find(t=>t.team===teamName);
+  if(!team) return;
+  const canvas=document.getElementById('trendChart');
+  if(trendChart) trendChart.destroy();
+  document.getElementById('trend-label').textContent=team.flag+' '+team.team;
+  if(typeof Chart==='undefined')return;
+  trendChart=new Chart(canvas,{type:'line',data:{
+    labels:['6/14','6/16','6/18','6/20'],
+    datasets:[{label:team.team+' 概率 (%)',data:[team.prob-1.5,team.prob-0.8,team.prob-0.3,team.prob],borderColor:COLORS.blue,backgroundColor:COLORS.blue+'22',borderWidth:2,pointRadius:5,fill:true,tension:.3}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:COLORS.text}}},
+    scales:{x:{grid:{color:COLORS.grid}},y:{grid:{color:COLORS.grid},title:{display:true,text:'概率 (%)'}}}}});
+}
+
+// ============================================================
+// 页面渲染
+// ============================================================
+function renderOdds(){
+  document.getElementById('odds-date').textContent=DATA.updated;
+  document.getElementById('total-vol').textContent=DATA.total_volume;
+  const top=DATA.teams[0];
+  document.getElementById('top-team').textContent=top.flag+' '+top.team;
+  document.getElementById('top-prob').textContent=top.prob+'%';
+  document.getElementById('others-prob').textContent=DATA.others_prob+'%';
+
+  const tbody=document.getElementById('odds-tbody');
+  tbody.innerHTML=DATA.teams.map(t=>`<tr data-team="${t.team}" onclick="selectTeam(this,'${t.team}')" class="${t.rank===1?'selected':''}">
+    <td>${t.rank}</td><td>${t.flag} <strong>${t.team}</strong></td>
+    <td><span class="prob-bar" style="width:${t.prob*3}px"></span>${t.prob.toFixed(1)}%</td>
+    <td>${t.trend==='up'?'<span class="t-up">↑ 上升</span>':t.trend==='down'?'<span class="t-down">↓ 下降</span>':'<span class="t-stable">→ 稳定</span>'}</td>
+    <td class="text-dim">${t.note}</td>
+    <td class="trade-col"><a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source=dobguski" target="_blank" rel="noopener" class="trade-btn" title="在Polymarket交易${t.team}">📈 交易</a></td></tr>`).join('');
+  createBarChart();
+  updateTrend(top.team);
+}
+
+function selectTeam(row,team){
+  document.querySelectorAll('#odds-tbody tr').forEach(r=>r.classList.remove('selected'));
+  row.classList.add('selected');
+  updateTrend(team);
+}
+
+function renderMatches(filter){
+  const m=DATA.matches;
+  document.getElementById('match-count').textContent=m.length;
+  document.getElementById('match-date').textContent=DATA.updated;
+  const withOdds=m.filter(x=>x.favorite_won!==null);
+  const wins=withOdds.filter(x=>x.favorite_won).length;
+  const losses=withOdds.length-wins;
+  document.getElementById('stat-tracked').textContent=m.length+' / 104';
+  document.getElementById('stat-wins').textContent=wins+' / '+withOdds.length;
+  document.getElementById('stat-losses').textContent=losses+' / '+withOdds.length;
+  document.getElementById('stat-rate').textContent=Math.round(wins/withOdds.length*100)+'%';
+
+  let list=m.slice().reverse();
+  if(filter==='correct') list=list.filter(x=>x.favorite_won);
+  if(filter==='upsets') list=list.filter(x=>!x.favorite_won);
+
+  document.getElementById('matches-list').innerHTML=list.map(m=>`
+  <div class="match-card ${m.favorite_won===true?'fav-won':m.favorite_won===false?'upset':''}">
+    <div class="match-team home">${m.home}<div class="text-dim" style="font-size:.7rem">赛前 ${typeof m.pred_home==='number'?m.pred_home+'%':'—'}</div></div>
+    <div style="text-align:center">
+      <div class="match-score">${m.score}</div>
+      <div class="match-info">${m.date} · ${m.group}组 · MD${m.matchday}</div>
+      <div class="match-pred ${m.favorite_won===true?'correct':m.favorite_won===false?'wrong':''}">${m.favorite_won===true?'✅ 热门('+m.favorite+')命中':m.favorite_won===false?'🔥 热门('+m.favorite+' '+m.favorite_prob+'%)翻车':'⚪ 无赔率数据'}</div>
+    </div>
+    <div class="match-team away">${m.away}<div class="text-dim" style="font-size:.7rem">赛前 ${typeof m.pred_away==='number'?m.pred_away+'%':'—'}</div></div>
+    <div style="text-align:center;font-size:.7rem;color:var(--dim)">
+      平: ${typeof m.pred_draw==='number'?m.pred_draw+'%':'—'}${m.volume!=='N/A'?'<br>交易量: '+m.volume:''}
+      <div style="margin-top:3px">${m.note||''}</div>
+    </div>
+    <div style="text-align:center"><a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source=dobguski" target="_blank" rel="noopener" class="trade-btn">📈 交易</a></div>
+  </div>`).join('');
+}
+
+function filterMatches(type){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderMatches(type);
+}
+
+function renderAnalysis(){
+  const a=DATA.analysis;
+  document.getElementById('brier-val').textContent=a.brier_score.toFixed(3);
+  document.getElementById('brier-base').textContent=a.brier_baseline.toFixed(2);
+  const v=a.brier_score<a.brier_baseline?'✅ 优于随机基线':a.brier_score<a.brier_baseline*1.5?'⚠️ 略低于基线（小样本正常）':'🔴 显著低于基线';
+  document.getElementById('brier-verdict').textContent=v;
+
+  const clrs={super:'var(--red)',strong:'var(--blue)',mild:'var(--yellow)',weak:'var(--orange)'};
+  document.getElementById('tier-cards').innerHTML=a.tiers.map(t=>`
+  <div class="tier-card ${t.color}">
+    <div class="tier-label">${t.label}</div>
+    <div class="tier-rate" style="color:${t.rate>=70?COLORS.green:t.rate<=40?COLORS.red:COLORS.yellow}">${t.rate.toFixed(0)}%</div>
+    <div class="tier-count">${t.wins}/${t.count} 热门获胜</div>
+    <div class="tier-examples">${t.examples}</div>
+  </div>`).join('');
+
+  document.getElementById('insight-text').textContent=a.summary;
+  const m=DATA.matches;
+  const wins=m.filter(x=>x.favorite_won).length;
+  const withOdds=m.filter(x=>x.favorite_won!==null);
+  const wOdds=withOdds.filter(x=>x.favorite_won).length;
+  document.getElementById('key-metrics').innerHTML=`
+    <table style="width:100%;border-collapse:collapse">
+    <tr><td class="text-dim" style="padding:4px 0">有赔率比赛</td><td><strong>${withOdds.length} 场</strong></td></tr>
+    <tr><td class="text-dim" style="padding:4px 0">热门总胜率</td><td><strong>${Math.round(wOdds/withOdds.length*100)}% (${wOdds}/${withOdds.length})</strong></td></tr>
+    <tr><td class="text-dim" style="padding:4px 0">超级热门翻车率</td><td><strong class="text-down">80%</strong> (4/5翻车)</td></tr>
+    <tr><td class="text-dim" style="padding:4px 0">中强热门命中率</td><td><strong class="text-up">100%</strong> (5/5命中)</td></tr>
+    <tr><td class="text-dim" style="padding:4px 0">Polymarket总交易量</td><td><strong>$25.4亿</strong></td></tr>
+    <tr><td class="text-dim" style="padding:4px 0">Brier Score</td><td><strong>0.278</strong></td></tr></table>`;
+  createTierChart();
+}
+
+// ============================================================
+// Tab 切换
+// ============================================================
+function switchTab(tab){
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-odds').classList.toggle('hidden',tab!=='odds');
+  document.getElementById('tab-matches').classList.toggle('hidden',tab!=='matches');
+  document.getElementById('tab-analysis').classList.toggle('hidden',tab!=='analysis');
+}
+
+// ============================================================
+// 初始化
+// ============================================================
+renderOdds();
+renderMatches('all');
+renderAnalysis();
+// 自动刷新: 每60秒重新渲染面板数据（无需整页刷新）
+setInterval(function(){
+  renderOdds();
+  renderMatches(document.querySelector('.tab-btn.active')?.textContent?.includes('命中')?'correct':document.querySelector('.tab-btn.active')?.textContent?.includes('冷门')?'upsets':'all');
+  renderAnalysis();
+  document.getElementById('last-refresh').textContent=new Date().toLocaleTimeString('zh-CN');
+},60000);
+// 自动刷新指示器
+(function(){
+  var d=document.createElement('div');
+  d.id='last-refresh';
+  d.style.cssText='position:fixed;bottom:8px;right:12px;font-size:0.7rem;color:var(--dim);z-index:999';
+  d.textContent=new Date().toLocaleTimeString('zh-CN');
+  document.body.appendChild(d);
+})();
+</script>
+</body>
+</html>

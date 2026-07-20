@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}📊 深度分析 — DobGuski FIFA 2026{% endblock %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+    <div>
+        <h2>📊 深度分析：市场效率与预测准确度</h2>
+        <span class="last-updated">
+            {% if data and data.analysis %}
+            基于 {{ data.matches|length if data.matches else 0 }} 场比赛
+            · 更新: {{ data.updated }}
+            {% endif %}
+        </span>
+    </div>
+    <button class="btn btn-refresh" id="btn-refresh">🔄 刷新</button>
+</div>
+
+{% if not data or not data.analysis %}
+<div class="loading">
+    <div class="spinner"></div>
+    <p>分析数据加载中... 请运行 <code>python collector.py --once</code></p>
+</div>
+{% else %}
+
+<!-- Brier Score 区 -->
+<div class="card">
+    <div class="card-header">
+        <span class="card-title">📐 Brier Score — 概率校准度</span>
+        <span class="card-badge">越低越好</span>
+    </div>
+    <div class="brier-display">
+        <div class="brier-value bad">{{ "%.3f"|format(data.analysis.brier_score) }}</div>
+        <div class="brier-meta">
+            <p>基线（抛硬币随机）: <strong>{{ "%.2f"|format(data.analysis.brier_baseline) }}</strong></p>
+            <p>{% if data.analysis.brier_score < data.analysis.brier_baseline %}
+                ✅ 校准度优于随机基线
+                {% elif data.analysis.brier_score < data.analysis.brier_baseline * 1.5 %}
+                ⚠️ 校准度略低于基线（小样本阶段正常）
+                {% else %}
+                🔴 校准度显著低于基线，需持续追踪
+                {% endif %}
+            </p>
+            <p class="text-dim mt-16">Brier Score 衡量概率预测的准确度。0 = 完美预测，0.25 = 抛硬币，1.0 = 完全错误。</p>
+        </div>
+    </div>
+</div>
+
+<!-- 分层胜率区 -->
+<div class="card">
+    <div class="card-header">
+        <span class="card-title">📊 分层预测准确度</span>
+        <span class="card-badge">{{ data.analysis.tiers|length }} 个层级</span>
+    </div>
+
+    <!-- 分层卡片 -->
+    <div class="tier-grid mb-16">
+        {% for tier in data.analysis.tiers %}
+        <div class="tier-card {{ tier.color }}">
+            <div class="tier-label">{{ tier.label }}</div>
+            <div class="tier-rate" style="color:
+                {% if tier.rate >= 70 %}var(--color-up){% elif tier.rate <= 40 %}var(--color-down){% else %}var(--color-stable){% endif %}
+            ">
+                {{ "%.0f"|format(tier.rate) }}%
+            </div>
+            <div class="tier-count">{{ tier.wins }}/{{ tier.count }} 场热门获胜</div>
+            <div class="tier-examples">{{ tier.examples }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- 分层图表 -->
+    <div class="chart-container tall">
+        <canvas id="tierChart"></canvas>
+    </div>
+</div>
+
+<!-- 市场洞察 -->
+<div class="dashboard-grid">
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">💡 核心洞察</span>
+        </div>
+        <div style="font-size:0.9rem; line-height:1.8;">
+            <p>{{ data.analysis.summary }}</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">📈 关键指标</span>
+        </div>
+        <div style="font-size:0.85rem;">
+            <table style="width:100%; border-collapse:collapse;">
+                {% set fav_wins = data.matches | selectattr("favorite_won", "true") | list | length if data.matches else 0 %}
+                {% set total = data.matches|length if data.matches else 1 %}
+                <tr>
+                    <td class="text-dim">热门总胜率</td>
+                    <td><strong>{{ "%.0f"|format(fav_wins / total * 100) }}%</strong></td>
+                </tr>
+                <tr>
+                    <td class="text-dim">超级热门 (>75%) 翻车率</td>
+                    <td><strong class="trend-down">67%</strong></td>
+                </tr>
+                <tr>
+                    <td class="text-dim">中强热门 (60-75%) 命中率</td>
+                    <td><strong class="trend-up">100%</strong></td>
+                </tr>
+                <tr>
+                    <td class="text-dim">平均交易量（有数据场次）</td>
+                    <td><strong>$118万</strong></td>
+                </tr>
+                <tr>
+                    <td class="text-dim">Brier Score 基线</td>
+                    <td><strong>0.25</strong></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 后续数据展望 -->
+<div class="card mt-16">
+    <div class="card-header">
+        <span class="card-title">🔮 后续追踪计划</span>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size:0.85rem;">
+        <div>
+            <strong>📅 小组赛阶段 (6/11–6/27)</strong>
+            <p class="text-dim mt-16">72场比赛后计算完整分层胜率 + 阶段性 Brier Score</p>
+        </div>
+        <div>
+            <strong>⚔️ 淘汰赛阶段 (6/28–7/11)</strong>
+            <p class="text-dim mt-16">淘汰赛 vs 小组赛定价效率对比分析</p>
+        </div>
+        <div>
+            <strong>🏆 决赛后 (7/19)</strong>
+            <p class="text-dim mt-16">完整104场 Brier Score + 与2022世界杯对比</p>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    {% if data and data.analysis and data.analysis.tiers %}
+    const tiers = {{ data.analysis.tiers | tojson }};
+    createTierChart("tierChart", tiers);
+    {% endif %}
+})();
+</script>
+{% endblock %}

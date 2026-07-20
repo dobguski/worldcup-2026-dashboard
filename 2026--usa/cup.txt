@@ -1,0 +1,311 @@
+= World Cup 2026      # in Canada, USA, and Mexico
+
+#  104 matches featuring 48 teams played across 16 host cities in three countries
+
+# Stadiums:
+#  Mexico City,              Estadio Azteca
+#  Guadalajara (Zapopan),    Estadio Akron
+#  Monterrey (Guadalupe),    Estadio BBVA
+#  Atlanta,                  Mercedes-Benz Stadium
+#  Boston (Foxborough),      Gillette Stadium
+#  Dallas (Arlington),       AT&T Stadium
+#  Houston,                  NRG Stadium
+#  Kansas City,              Arrowhead Stadium
+#  Los Angeles (Inglewood),  SoFi Stadium
+#  Miami (Miami Gardens),    Hard Rock Stadium
+#  New York/New Jersey (East Rutherford),  MetLife Stadium
+#  Philadelphia,             Lincoln Financial Field
+#  San Francisco Bay Area (Santa Clara),   Levi's Stadium
+#  Seattle,                 Lumen Field
+#  Toronto,                 BMO Field
+#  Vancouver,               BC Place
+
+
+
+Group A | Mexico        South Africa    South Korea    Czech Republic
+Group B | Canada      Bosnia & Herzegovina  Qatar    Switzerland
+Group C | Brazil          Morocco      Haiti   Scotland
+Group D | USA   Paraguay     Australia   Turkey
+Group E | Germany         Curaçao      Ivory Coast   Ecuador
+Group F | Netherlands   Japan        Sweden  Tunisia
+Group G | Belgium         Egypt        Iran        New Zealand
+Group H | Spain           Cape Verde   Saudi Arabia   Uruguay
+Group I | France      Senegal   Iraq   Norway
+Group J | Argentina    Algeria   Austria   Jordan
+Group K | Portugal   DR Congo   Uzbekistan  Colombia
+Group L | England    Croatia     Ghana   Panama
+
+####
+## trivia
+##  note - official (normalized) fifa country names are:
+##      South Korea    => Korea Republic
+##      Iran           => IR Iran
+##      Cape Verde     => Cabo Verde     [pt]
+##      DR Congo       => Congo DR
+##      Ivory Coast    => Côte d'Ivoire  [fr]
+##      Czech Republic => Czechia
+##      Turkey         => Türkiye        [tr]
+
+
+
+## change to only three matchdays in group stage - why? why not?
+##  ▪ Matchday 1 | Jun 11-17
+##  ▪ Matchday 2 | Jun 18-23
+##  ▪ Matchday 3 | Jun 24-27
+
+
+▪ Matchday 1 | Thu Jun 11
+▪ Matchday 2 | Fri Jun 12
+▪ Matchday 3 | Sat Jun 13
+▪ Matchday 4 | Sun Jun 14
+▪ Matchday 5 | Mon Jun 15
+▪ Matchday 6 | Tue Jun 16
+▪ Matchday 7 | Wed Jun 17
+▪ Matchday 8 | Thu Jun 18
+▪ Matchday 9 | Fri Jun 19
+▪ Matchday 10 | Sat Jun 20
+▪ Matchday 11 | Sun Jun 21
+▪ Matchday 12 | Mon Jun 22
+▪ Matchday 13 | Tue Jun 23
+▪ Matchday 14 | Wed Jun 24
+▪ Matchday 15 | Thu Jun 25
+▪ Matchday 16 | Fri Jun 26
+▪ Matchday 17 | Sat Jun 27
+
+
+
+▪ Group A
+Thu June 11
+  13:00 UTC-6     Mexico  2-0 (1-0)  South Africa        @ Mexico City
+               (Julián Quiñones 9' Raúl Jiménez 67')
+  20:00 UTC-6     South Korea  2-1 (0-0)  Czech Republic     @ Guadalajara (Zapopan)
+                (Hwang In-Beom 67' Oh Hyeon-Gyu 80';
+                  Ladislav Krejcí 59')
+Thu June 18
+  12:00 UTC-4     Czech Republic  1-1 (0-0)  South Africa    @ Atlanta
+  19:00 UTC-6     Mexico  1-0 (0-0)  South Korea    @ Guadalajara (Zapopan)
+Wed June 24
+  19:00 UTC-6     Czech Republic  0-3 (0-0)  Mexico    @ Mexico City
+  19:00 UTC-6     South Africa  1-0 (0-0)  South Korea    @ Monterrey (Guadalupe)
+
+
+▪ Group B
+Fri June 12
+  15:00 UTC-4     Canada   1-1 (0-1) Bosnia & Herzegovina    @ Toronto
+                    (Cyle Larin 78'; Jovo Lukić 21')
+Sat June 13
+  12:00 UTC-7     Qatar    1-1 (0-1) Switzerland        @ San Francisco Bay Area (Santa Clara)
+                    (Boualem Khoukhi 90+4'; Breel Embolo 17'(p))
+Thu June 18
+  12:00 UTC-7     Switzerland  4-1 (0-0)  Bosnia & Herzegovina    @ Los Angeles (Inglewood)
+  15:00 UTC-7     Canada  6-0 (0-0)  Qatar    @ Vancouver
+Wed June 24
+  12:00 UTC-7     Switzerland  2-1 (0-0)  Canada    @ Vancouver
+  12:00 UTC-7     Bosnia & Herzegovina  3-1 (0-0)  Qatar    @ Seattle
+
+
+▪ Group C
+Sat June 13
+  18:00 UTC-4        Brazil   1-1 (1-1) Morocco    @ New York/New Jersey (East Rutherford)
+                    (Vinícius Júnior 32'; Ismael Saibari 21')
+  21:00 UTC-4        Haiti    0-1 (0-1) Scotland   @ Boston (Foxborough)
+                    (John McGinn 28')
+Fri June 19
+  18:00 UTC-4     Scotland  0-1 (0-0)  Morocco    @ Boston (Foxborough)
+  20:30 UTC-4     Brazil  3-0 (0-0)  Haiti    @ Philadelphia
+Wed June 24
+  18:00 UTC-4     Scotland  0-3 (0-0)  Brazil    @ Miami (Miami Gardens)
+  18:00 UTC-4     Morocco  4-2 (0-0)  Haiti    @ Atlanta
+
+
+▪ Group D
+Fri June 12
+  18:00 UTC-7    USA  4-1 (3-0)  Paraguay    @ Los Angeles (Inglewood)
+               (Damian Bobadilla 7'(og) Folarin Balogun 31', 45+5' Giovanni Reyna 90+8';
+                 Mauricio 73' )
+Sat June 13
+  21:00 UTC-7    Australia       2-0 (1-0) Turkey   @ Vancouver
+                    (Nestory Irankunda 27' Connor Metcalfe 75')
+Fri June 19
+  12:00 UTC-7     USA  2-0 (0-0)  Australia    @ Seattle
+  20:00 UTC-7     Turkey  0-1 (0-0)  Paraguay    @ San Francisco Bay Area (Santa Clara)
+Thu June 25
+  19:00 UTC-7     Turkey  3-2 (0-0)  USA    @ Los Angeles (Inglewood)
+  19:00 UTC-7     Paraguay  0-0 (0-0)  Australia    @ San Francisco Bay Area (Santa Clara)
+
+
+▪ Group E
+Sun June 14
+  12:00 UTC-5    Germany 7-1 (3-1) Curaçao         @ Houston
+		 (Felix Nmecha 6' Nico Schlotterbeck 38' Kai Havertz 45+5'(p), 88' Jamal Musiala 47' 
+           Nathaniel Brown 68' Deniz Undav 78'; 
+            Livano Comenencia 21') 
+  19:00 UTC-4     Ivory Coast  1-0 (0-0)  Ecuador    @ Philadelphia
+Sat June 20
+  16:00 UTC-4     Germany  2-1 (0-0)  Ivory Coast    @ Toronto
+  19:00 UTC-5     Ecuador  0-0 (0-0)  Curaçao    @ Kansas City
+Thu June 25
+  16:00 UTC-4     Curaçao  0-2 (0-0)  Ivory Coast    @ Philadelphia
+  16:00 UTC-4     Ecuador  2-1 (0-0)  Germany    @ New York/New Jersey (East Rutherford)
+
+
+▪ Group F
+Sun June 14
+  15:00 UTC-5    Netherlands  2-2 (0-0) Japan          @ Dallas (Arlington)
+                    (Virgil van Dijk 51' Crysencio Summerville 64';
+                       Keito Nakamura 57' Daichi Kamada 88')
+  20:00 UTC-6    Sweden       5-1 (2-1) Tunisia  @ Monterrey (Guadalupe)
+Sat June 20
+  12:00 UTC-5     Netherlands  5-1 (0-0)  Sweden    @ Houston
+  22:00 UTC-6     Tunisia  0-4 (0-0)  Japan    @ Monterrey (Guadalupe)
+Thu June 25
+  18:00 UTC-5     Japan  1-1 (0-0)  Sweden    @ Dallas (Arlington)
+  18:00 UTC-5     Tunisia  1-3 (0-0)  Netherlands    @ Kansas City
+
+
+▪ Group G
+Mon June 15
+  12:00 UTC-7     Belgium  1-1 (0-0)  Egypt    @ Seattle
+  18:00 UTC-7     Iran  2-2 (0-0)  New Zealand    @ Los Angeles (Inglewood)
+Sun June 21
+  12:00 UTC-7     Belgium  0-0 (0-0)  Iran    @ Los Angeles (Inglewood)
+  18:00 UTC-7     New Zealand  1-3 (0-0)  Egypt    @ Vancouver
+Fri June 26
+  20:00 UTC-7     Egypt  1-1 (0-0)  Iran    @ Seattle
+  20:00 UTC-7     New Zealand  1-5 (0-0)  Belgium    @ Vancouver
+
+
+▪ Group H
+Mon June 15
+  12:00 UTC-4     Spain  0-0 (0-0)  Cape Verde    @ Atlanta
+  18:00 UTC-4     Saudi Arabia  1-1 (0-0)  Uruguay    @ Miami (Miami Gardens)
+Sun June 21
+  12:00 UTC-4     Spain  4-0 (0-0)  Saudi Arabia    @ Atlanta
+  18:00 UTC-4     Uruguay  2-2 (0-0)  Cape Verde    @ Miami (Miami Gardens)
+Fri June 26
+  19:00 UTC-5     Cape Verde  0-0 (0-0)  Saudi Arabia    @ Houston
+  18:00 UTC-6     Uruguay  0-1 (0-0)  Spain    @ Guadalajara (Zapopan)
+
+
+▪ Group I
+Tue June 16
+  15:00 UTC-4     France  3-1 (0-0)  Senegal    @ New York/New Jersey (East Rutherford)
+  18:00 UTC-4     Iraq  1-4 (0-0)  Norway    @ Boston (Foxborough)
+Mon June 22
+  17:00 UTC-4     France  3-0 (0-0)  Iraq    @ Philadelphia
+  20:00 UTC-4     Norway  3-2 (0-0)  Senegal    @ New York/New Jersey (East Rutherford)
+Fri June 26
+  15:00 UTC-4     Norway  1-4 (0-0)  France    @ Boston (Foxborough)
+  15:00 UTC-4     Senegal  5-0 (0-0)  Iraq    @ Toronto
+
+
+▪ Group J
+Tue June 16
+  20:00 UTC-5     Argentina  3-0 (0-0)  Algeria    @ Kansas City
+  21:00 UTC-7     Austria  3-1 (0-0)  Jordan    @ San Francisco Bay Area (Santa Clara)
+Mon June 22
+  12:00 UTC-5     Argentina  2-0 (0-0)  Austria    @ Dallas (Arlington)
+  20:00 UTC-7     Jordan  1-2 (0-0)  Algeria    @ San Francisco Bay Area (Santa Clara)
+Sat June 27
+  21:00 UTC-5     Algeria  3-3 (0-0)  Austria    @ Kansas City
+  21:00 UTC-5     Jordan  1-3 (0-0)  Argentina    @ Dallas (Arlington)
+
+
+▪ Group K
+Wed June 17
+  12:00 UTC-5     Portugal  1-1 (0-0)  DR Congo    @ Houston
+  20:00 UTC-6     Uzbekistan  1-3 (0-0)  Colombia    @ Mexico City
+Tue June 23
+  12:00 UTC-5     Portugal  5-0 (0-0)  Uzbekistan    @ Houston
+  20:00 UTC-6     Colombia  1-0 (0-0)  DR Congo    @ Guadalajara (Zapopan)
+Sat June 27
+  19:30 UTC-4     Colombia  0-0 (0-0)  Portugal    @ Miami (Miami Gardens)
+  19:30 UTC-4     DR Congo  3-1 (0-0)  Uzbekistan    @ Atlanta
+
+
+▪ Group L
+Wed June 17
+  15:00 UTC-5     England  4-2 (0-0)  Croatia    @ Dallas (Arlington)
+  19:00 UTC-4     Ghana  1-0 (0-0)  Panama    @ Toronto
+Tue June 23
+  16:00 UTC-4     England  0-0 (0-0)  Ghana    @ Boston (Foxborough)
+  19:00 UTC-4     Panama  0-1 (0-0)  Croatia    @ Toronto
+Sat June 27
+  17:00 UTC-4     Panama  0-2 (0-0)  England    @ New York/New Jersey (East Rutherford)
+  17:00 UTC-4     Croatia  2-1 (0-0)  Ghana    @ Philadelphia
+
+
+▪ Knockout Stage
+
+Sun June 28
+  19:00 UTC-7     South Africa  0-1 (0-0)  Canada    @ SoFi Stadium
+Mon June 29
+  17:00 UTC-5     Brazil  2-1 (0-0)  Japan    @ NRG Stadium
+  20:30 UTC-4     Germany  1-1 (0-0)  Paraguay    @ Gillette Stadium
+                    (Kai Havertz 54'; Julio Enciso 42')
+  20:00 UTC-6     Netherlands  1-1 (0-0)  Morocco   2-3 pen.    @ Estadio BBVA
+  17:00 UTC-5     Ivory Coast  1-2 (0-0)  Norway    @ AT&T Stadium
+  21:00 UTC-4     France  3-0 (0-0)  Sweden    @ MetLife Stadium
+  20:00 UTC-6     Mexico  2-0 (0-0)  Ecuador    @ Estadio Banorte
+Wed July 1
+  16:00 UTC-4     England  2-1 (0-0)  DR Congo    @ Mercedes-Benz Stadium
+  20:00 UTC-7     Belgium  3-2 (0-0)  Senegal    @ Lumen Field
+  19:00 UTC-7     USA  2-0 (0-0)  Bosnia & Herzegovina    @ Levi's Stadium
+Thu July 2
+  16:00 UTC-4     Spain  3-0 (0-0)  Austria    @ Hard Rock Stadium
+  20:00 UTC-7     Portugal  2-1 (0-0)  Croatia    @ BC Place
+  17:00 UTC-4     Australia  1-1 (0-0)  Egypt    @ BMO Field
+  21:00 UTC-4     Argentina  3-2 (0-0)  Cape Verde    @ MetLife Stadium
+  19:30 UTC-5     Colombia  1-0 (0-0)  Ghana    @ Estadio Azteca
+
+
+▪ Round of 16
+
+Sat July 4
+  12:00 UTC-5     Canada  0-3 (0-0)  Morocco    @ NRG Stadium
+  17:00 UTC-4     Paraguay  0-1 (0-0)  France    @ Lincoln Financial Field
+Sun July 5
+  16:00 UTC-4     Brazil  1-2 (0-0)  Norway    @ MetLife Stadium
+  18:00 UTC-6     Mexico  2-3 (0-0)  England    @ Estadio Azteca
+  17:00 UTC-7     USA  1-4 (0-0)  Belgium    @ Lumen Field
+  14:00 UTC-5     Portugal  0-1 (0-0)  Spain    @ AT&T Stadium
+  17:00 UTC-7     USA  1-2 (0-0)  Belgium    @ Lumen Field
+  13:00 UTC-7     Switzerland  0-0 (0-0)  Colombia    @ BC Place
+  12:00 UTC-4     Argentina  3-2 (0-0)  Egypt    @ Mercedes-Benz Stadium
+  13:00 UTC-7     Switzerland  0-0 (0-0)  Colombia    @ BC Place
+
+
+▪ Quarterfinals
+
+Thu July 9
+  17:00 UTC-4     France  2-0 (0-0)  Morocco    @ Gillette Stadium
+Fri July 11
+  17:00 UTC-4     Norway  1-2 (0-0)  England    @ Hard Rock Stadium
+  20:00 UTC-4     Spain  2-1 (0-0)  Belgium    @ Mercedes-Benz Stadium
+Sat July 12
+  17:00 UTC-7     Argentina  3-1 (0-0)  Switzerland    @ SoFi Stadium
+
+
+▪ Semifinals
+
+Tue July 14
+  17:00 UTC-5     France  0-2 (0-1)  Spain    @ AT&T Stadium
+                 (Mikel Oyarzabal 22' Pedro Porro 58')
+Wed July 15
+  20:00 UTC-4     England  1-2 (0-0)  Argentina    @ Mercedes-Benz Stadium
+                 (Anthony Gordon 55'; Enzo Fernández 85' Lautaro Martínez 90+2')
+
+
+▪ Third Place
+
+Sat July 18
+  15:00 UTC-4     France  4-6 (0-4)  England    @ Hard Rock Stadium
+                 (Kylian Mbappé 48', 66' Bradley Barcola 54' Ousmane Dembélé 90+';
+                  Declan Rice 3' Ezri Konsa 18' Bukayo Saka 37', 45+', 87' Jude Bellingham 90+8')
+
+
+▪ Final
+
+Sun July 19
+  15:00 UTC-4     Spain  1-0 (0-0)  Argentina    @ MetLife Stadium
+         a.e.t.   (Ferran Torres 106')

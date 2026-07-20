@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% block title %}🏆 冠军赔率 — DobGuski FIFA 2026{% endblock %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- 页面标题区 -->
+<div class="section-header">
+    <div>
+        <h2>🏆 2026 世界杯冠军赔率实时追踪</h2>
+        <span class="last-updated">
+            {% if data %}
+            数据更新: {{ data.updated }} · 来源: {{ data.source }}
+            {% else %}
+            数据加载中...
+            {% endif %}
+        </span>
+    </div>
+    <button class="btn btn-refresh" id="btn-refresh">🔄 刷新</button>
+</div>
+
+{% if not data %}
+<div class="loading">
+    <div class="spinner"></div>
+    <p>数据加载中... 请先运行 <code>python collector.py --once</code> 初始化数据。</p>
+</div>
+{% else %}
+
+<!-- Builder CTA Banner -->
+<div class="cta-banner">
+    <div class="cta-text">
+        🏗️ <strong>{{ builder.builder_name }}</strong> · Polymarket Builder
+        &nbsp;|&nbsp;
+        通过本站前往 Polymarket 交易，即支持本项目的持续开发。
+    </div>
+    <a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source={{ builder.builder_name }}"
+       target="_blank" rel="noopener" class="btn btn-primary">
+       🔗 前往 Polymarket 交易 FIFA 2026 →
+    </a>
+</div>
+
+<!-- 仪表盘网格 -->
+<div class="dashboard-grid">
+
+    <!-- 左列：赔率表格 -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">📊 冠军赔率 Top 16</span>
+            <span class="card-badge">{{ data.teams|length }} 支球队</span>
+        </div>
+        <table class="odds-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>球队</th>
+                    <th>概率</th>
+                    <th>趋势</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in data.teams %}
+                <tr data-team="{{ t.team }}" data-prob="{{ '%.1f'|format(t.prob) }}" data-token-id="{{ t.get('token_id', '') }}" {% if t.rank == 1 %}class="selected"{% endif %}>
+                    <td>{{ t.rank }}</td>
+                    <td>{{ t.flag }} <strong>{{ t.team }}</strong></td>
+                    <td>
+                        <span class="prob-bar" style="width:{{ t.prob * 3 }}px"></span>
+                        {{ "%.1f"|format(t.prob) }}%
+                    </td>
+                    <td>
+                        {% if t.trend == 'up' %}
+                        <span class="trend-up">↑ 上升</span>
+                        {% elif t.trend == 'down' %}
+                        <span class="trend-down">↓ 下降</span>
+                        {% else %}
+                        <span class="trend-stable">→ 稳定</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-dim">{{ t.note }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-dim mt-16" style="font-size:0.8rem;">
+            💡 点击表格行查看历史概率趋势
+        </div>
+    </div>
+
+    <!-- 右列：概览卡片 + 趋势图 -->
+    <div>
+        <!-- 概览卡片 -->
+        <div class="overview-cards">
+            <div class="overview-card">
+                <div class="label">总交易量</div>
+                <div class="value">{{ data.total_volume }}</div>
+            </div>
+            <div class="overview-card">
+                <div class="label">领先球队</div>
+                <div class="value">{{ data.teams[0].flag }} {{ data.teams[0].team }}</div>
+            </div>
+            <div class="overview-card">
+                <div class="label">热门概率</div>
+                <div class="value">{{ "%.1f"|format(data.teams[0].prob) }}%</div>
+            </div>
+            <div class="overview-card">
+                <div class="label">其他球队合计</div>
+                <div class="value">{{ "%.1f"|format(data.others_prob) }}%</div>
+            </div>
+        </div>
+
+        <!-- 概率分布气泡图 -->
+        <div class="card mt-16">
+            <div class="card-header">
+                <span class="card-title">🔮 概率分布</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="distChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全宽：冠军赔率横向柱状图 -->
+    <div class="card dashboard-full">
+        <div class="card-header">
+            <span class="card-title">📊 冠军概率对比 (Top 10)</span>
+            <span class="card-badge">绿色=上升 红色=下降 蓝色=稳定</span>
+        </div>
+        <div class="chart-container tall">
+            <canvas id="oddsBarChart"></canvas>
+        </div>
+    </div>
+
+    <!-- 全宽：交易面板 -->
+    <div class="trade-panel" id="trade-panel">
+        <div class="trade-panel-header">
+            <h3>
+                🛒 快速交易 —
+                <strong id="trade-team-name">选择一支球队</strong>
+                <span class="text-dim">(<span id="trade-team-prob">0</span>%)</span>
+                <span class="trade-builder-badge">🏗️ dobguski Builder</span>
+            </h3>
+            <button class="trade-close" onclick="document.getElementById('trade-panel').style.display='none'">✕</button>
+        </div>
+        <div class="trade-form">
+            <div class="full-width">
+                <label>Polymarket 钱包地址</label>
+                <input type="text" id="trade-wallet" placeholder="0x..." style="font-size:0.8rem;">
+            </div>
+            <div>
+                <label>市场 Token ID</label>
+                <input type="text" id="trade-token-id" placeholder="点击上方球队行自动填充">
+            </div>
+            <div>
+                <label>方向</label>
+                <select id="trade-side">
+                    <option value="BUY">BUY YES (买入看涨)</option>
+                    <option value="SELL">SELL YES (卖出看跌)</option>
+                </select>
+            </div>
+            <div>
+                <label>价格 (USDC)</label>
+                <input type="number" id="trade-price" step="0.01" min="0.01" max="1.00" value="0.50" placeholder="0.50">
+            </div>
+            <div>
+                <label>数量 (USDC)</label>
+                <input type="number" id="trade-size" step="1" min="1" value="10" placeholder="10">
+            </div>
+            <div class="full-width">
+                <button class="btn btn-primary" id="trade-submit-btn" onclick="submitOrder()" style="width:100%; padding:10px;">
+                    🚀 提交订单 (含 Builder 归因)
+                </button>
+            </div>
+        </div>
+        <div class="trade-result" id="trade-result"></div>
+    </div>
+
+    <!-- 全宽：选中球队趋势 -->
+    <div class="card dashboard-full">
+        <div class="card-header">
+            <span class="card-title" id="trend-title">📉 概率趋势</span>
+            <span class="card-badge" id="trend-count">0 个数据点</span>
+        </div>
+        <div class="chart-container tall">
+            <canvas id="trendChart"></canvas>
+        </div>
+    </div>
+
+    <!-- 全宽：市场动态 -->
+    <div class="card dashboard-full">
+        <div class="card-header">
+            <span class="card-title">📰 市场动态</span>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size:0.85rem;">
+            <div>
+                <strong class="trend-up">↑ 上升最快</strong>
+                <p class="mt-16">🇩🇪 德国 (+?) — 7-1大胜后信心飙升</p>
+                <p>🇯🇵 日本 (+?) — 2-2逼平荷兰</p>
+            </div>
+            <div>
+                <strong class="trend-down">↓ 下降最快</strong>
+                <p class="mt-16">🏴󠁧󠁢󠁥󠁮󠁧󠁿 英格兰 (-?) — 防守伤病困扰</p>
+                <p>🇧🇷 巴西 (-?) — 1-1被摩洛哥逼平</p>
+            </div>
+            <div>
+                <strong>📊 交易量最大</strong>
+                <p class="mt-16">🇲🇽 墨西哥 vs 南非 — $186万</p>
+                <p>🇰🇷 韩国 vs 捷克 — $107万</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    // 初始化赔率柱状图
+    {% if data and data.teams %}
+    const teams = {{ data.teams | tojson }};
+    createOddsBarChart("oddsBarChart", teams);
+    createDistributionChart("distChart", teams);
+
+    // 默认选中第一支球队的趋势
+    if (teams.length > 0) {
+        updateTrendChart(teams[0].team);
+    }
+    {% endif %}
+})();
+</script>
+{% endblock %}

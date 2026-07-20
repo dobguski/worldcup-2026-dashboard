@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-07-12T05:54:31.799648+00:00",
+  "layers": {
+    "completeness": {
+      "issues": [
+        {
+          "layer": "completeness",
+          "severity": "high",
+          "file": "teams.json",
+          "issue": "Only 50/48 teams"
+        },
+        {
+          "layer": "completeness",
+          "severity": "low",
+          "file": "teams.json",
+          "issue": "2 teams missing coach"
+        }
+      ]
+    },
+    "consistency": {
+      "issues": [
+        {
+          "layer": "consistency",
+          "severity": "low",
+          "issue": "1 teams in matches not in wiki_squads"
+        }
+      ]
+    },
+    "freshness": {
+      "issues": []
+    },
+    "accuracy": {
+      "issues": [
+        {
+          "layer": "accuracy",
+          "severity": "low",
+          "issue": "PM accuracy stats mismatch: actual=26%, stated=62%"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total_issues": 4,
+    "critical": 0,
+    "high": 1,
+    "status": "WARN",
+    "verdict": "0 critical, 1 high issues need attention"
+  },
+  "quality_score": 87
+}

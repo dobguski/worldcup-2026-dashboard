@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Secrets & Credentials — NEVER COMMIT
+.env
+*.pem
+secret/
+builder_config.json
+*apikey*
+*credential*
+
+# Build artifacts
+*.tar
+*.7z
+*.zip
+*.pdf
+
+# Logs
+*.log
+logs/
+
+# Staging & Backups
+_stage/
+.db_snapshots/
+docs/_sync/
+docs/_extract/
+docs/backups/
+docs/charts/
+reports/
+
+# IDE & Tools
+.vscode/
+.claude/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Generated JavaScript
+*.min.js.map

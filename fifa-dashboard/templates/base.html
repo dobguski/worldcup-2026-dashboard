@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DobGuski FIFA 2026{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/magic-sdk@31/dist/magic.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/">⚽ DobGuski FIFA 2026</a>
+            <span class="nav-badge">MVP</span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">🏆 冠军赔率</a>
+            <a href="/matches" class="nav-link {% if request.path == '/matches' %}active{% endif %}">📋 比赛追踪</a>
+            <a href="/analysis" class="nav-link {% if request.path == '/analysis' %}active{% endif %}">📊 深度分析</a>
+        </div>
+        <div class="nav-status" id="status-indicator">
+            <span class="status-dot" id="status-dot"></span>
+            <span id="status-text">加载中...</span>
+        </div>
+        <button class="btn btn-sm btn-secondary" id="wallet-btn" onclick="connectWallet()" style="font-size:.75rem">
+            👛 登录钱包
+        </button>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <p>数据来源：Polymarket、Gate.com、KuCoin、BingX 聚合报道</p>
+                <p class="footer-disclaimer">⚠️ 本仪表盘仅供研究参考，不构成投资建议。预测市场存在风险。</p>
+            </div>
+            <div class="footer-right">
+                <a href="https://polymarket.com/markets?tag=fifaWorldCup2026&utm_source={{ builder.builder_name }}"
+                   target="_blank" rel="noopener" class="btn btn-primary">
+                   🔗 在 Polymarket 交易 FIFA 2026
+                </a>
+                <span class="builder-badge" title="Polymarket Builder: {{ builder.builder_name }}">
+                   🏗️ Powered by {{ builder.builder_name }}
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/trade.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/wallet.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

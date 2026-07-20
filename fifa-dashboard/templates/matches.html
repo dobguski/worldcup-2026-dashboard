@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}📋 比赛追踪 — DobGuski FIFA 2026{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+    <div>
+        <h2>📋 比赛追踪：赛前赔率 vs 实际结果</h2>
+        <span class="last-updated">
+            {% if data %}
+            已追踪 {{ data.matches|length }} / 104 场比赛
+            · 数据更新: {{ data.updated }}
+            {% endif %}
+        </span>
+    </div>
+    <button class="btn btn-refresh" id="btn-refresh">🔄 刷新</button>
+</div>
+
+{% if not data or not data.matches %}
+<div class="loading">
+    <div class="spinner"></div>
+    <p>比赛数据加载中... 请运行 <code>python collector.py --once</code></p>
+</div>
+{% else %}
+
+<!-- 概览卡片 -->
+<div class="overview-cards mb-16">
+    <div class="overview-card">
+        <div class="label">已追踪场次</div>
+        <div class="value">{{ data.matches|length }} / 104</div>
+    </div>
+    <div class="overview-card">
+        <div class="label">热门获胜</div>
+        <div class="value good">{{ stats.fav_wins }} / {{ data.matches|length }}</div>
+    </div>
+    <div class="overview-card">
+        <div class="label">热门翻车</div>
+        <div class="value warn">{{ stats.fav_losses }} / {{ data.matches|length }}</div>
+    </div>
+    <div class="overview-card">
+        <div class="label">热门胜率</div>
+        <div class="value {% if stats.fav_win_rate >= 60 %}good{% elif stats.fav_win_rate <= 40 %}warn{% endif %}">
+            {{ stats.fav_win_rate }}%
+        </div>
+    </div>
+</div>
+
+<!-- 过滤标签 -->
+<div class="tabs">
+    <button class="tab active" data-filter="all">全部 ({{ data.matches|length }})</button>
+    <button class="tab" data-filter="correct">✅ 热门命中 ({{ stats.fav_wins }})</button>
+    <button class="tab" data-filter="upsets">🔥 冷门翻车 ({{ stats.fav_losses }})</button>
+</div>
+
+<!-- 比赛列表 -->
+{% for m in data.matches|reverse %}
+<div class="match-card {% if m.favorite_won %}favorite-won{% else %}upset{% endif %}">
+    <div class="match-team home">
+        {{ m.home }}
+        <div class="match-meta">赛前 {{ m.pred_home }}%</div>
+    </div>
+
+    <div style="text-align:center;">
+        <div class="match-score">{{ m.score }}</div>
+        <div class="match-info">{{ m.date }} · {{ m.stage }} · {{ m.group }}组</div>
+        <div class="match-prediction {% if m.favorite_won %}correct{% else %}wrong{% endif %}">
+            {% if m.favorite_won %}
+            ✅ 热门({{ m.favorite }})命中
+            {% else %}
+            🔥 热门({{ m.favorite }} {{ m.favorite_prob }}%)翻车
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="match-team away">
+        {{ m.away }}
+        <div class="match-meta">赛前 {{ m.pred_away }}%</div>
+    </div>
+
+    <div style="text-align:center;">
+        <div style="font-size:0.75rem; color: var(--color-text-dim);">
+            平: {{ m.pred_draw }}%
+            {% if m.volume and m.volume != 'N/A' %}<br>交易量: {{ m.volume }}{% endif %}
+        </div>
+        <div style="font-size:0.78rem; margin-top:4px; color: var(--color-text-dim);">{{ m.note }}</div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- 图例 -->
+<div class="card mt-16" style="font-size:0.85rem;">
+    <div class="flex-between">
+        <span>🟢 绿色边框 = 热门命中</span>
+        <span>🔴 红色边框 = 热门翻车</span>
+        <span>📊 赔率为三项结果概率（主胜/平/客胜）</span>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}
