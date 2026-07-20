@@ -24,7 +24,7 @@ A pure HTML/CSS/JS dashboard tracking the entire 2026 FIFA World Cup tournament 
 | 标签 Tab | 内容 Content |
 |----------|-------------|
 | 🏆 淘汰赛 | 完整淘汰赛对阵 + 比分 + 晋级路线 |
-| ⚽ 射手榜 | 181 名球员 · 303 进球（前20一览，展开全部） |
+| ⚽ 射手榜 | 181 名球员 · 309 进球（前20一览，展开全部） |
 | 📊 积分榜 | 12 组 × 4 队 小组积分 |
 | ⚡ 最新战报 | 按日期分组，105 场比赛卡片 |
 | 📈 猜冠军 | Polymarket 实时冠军赔率（60 队） |
@@ -36,7 +36,7 @@ A pure HTML/CSS/JS dashboard tracking the entire 2026 FIFA World Cup tournament 
 | 模块 | 说明 |
 |------|------|
 | 🏆 淘汰赛对阵 | R32 → R16 → QF → SF → Final 全路径，胜者加粗 + 箭头，点球 PK 标注 |
-| ⚽ 射手榜 | 181 人 / 303 球，前 20 名一屏展示，20+ 点击展开，金靴 Mbappé 10 球 |
+| ⚽ 射手榜 | 181 人 / 309 球，前 20 名一屏展示，20+ 点击展开，金靴 Mbappé 10 球 |
 | 📊 积分榜 | 12 个小组自动排序，最佳第三名 ✓ 晋级标注 |
 | ⚡ 最新战报 | 按日期分组卡片，实时比分 + 半场比分 + 点球数据 |
 | 📈 猜冠军 | iframe 嵌入 Railway Flask 应用，Polymarket CLOB 实时赔率 |
@@ -51,7 +51,7 @@ A pure HTML/CSS/JS dashboard tracking the entire 2026 FIFA World Cup tournament 
 | 如果你... | 你可以... |
 |-----------|----------|
 | 🎓 在学前端 | 研究纯 HTML/CSS/JS (93KB 单文件) 如何构建完整应用——双语切换、实时轮询、响应式布局、LocalStorage 投票 |
-| 📊 做数据分析 | 直接下载结构化 JSON 数据做世界杯统计分析——105 场比赛、181 名射手、303 个进球 |
+| 📊 做数据分析 | 直接下载结构化 JSON 数据做世界杯统计分析——105 场比赛、181 名射手、309 个进球 |
 | ⚽ 是球迷 | 回顾 2026 世界杯全部比赛——从小组赛到决赛，含比分、点球、半场数据 |
 | 💰 研究预测市场 | 学习 Polymarket CLOB API 集成：60 队赔率采集、621 条历史快照、HMAC 签名认证 |
 | 🔧 想二次开发 | Fork 后替换数据源，适配其他赛事（欧洲杯、亚洲杯、联赛均可） |
@@ -187,7 +187,7 @@ worldcup-2026-dashboard/
 ├── run_server.py            ← 自动重启 + 服务器启动器
 │
 ├── match_data.json          ← 105 场比赛数据
-├── goalscorers.json         ← 181 人 / 303 球
+├── goalscorers.json         ← 181 人 / 309 球
 ├── bracket_data.json        ← 淘汰赛对阵结构
 ├── standings.json           ← 12 组积分榜
 ├── teams.json               ← 48 队详细数据
