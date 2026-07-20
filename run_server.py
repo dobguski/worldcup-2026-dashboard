@@ -7,9 +7,9 @@ RESTART_WINDOW = 300  # 5 minutes
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-# Ensure HTTPS remote for reliable push
-subprocess.run(["git", "remote", "set-url", "https-push",
-    "https://github.com/dobguski/worldcup-live.git"], capture_output=True)
+# Auto-push disabled for public release — uncomment and set your own repo to enable
+# subprocess.run(["git", "remote", "set-url", "https-push",
+#     "https://github.com/YOUR_USERNAME/YOUR_REPO.git"], capture_output=True)
 
 restarts = []
 while True:
