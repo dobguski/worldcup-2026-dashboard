@@ -59,6 +59,68 @@ A pure HTML/CSS/JS dashboard tracking the entire 2026 FIFA World Cup tournament 
 
 ---
 
+## 🛠 How to use · 可以这样使用
+
+### 📊 数据分析（无需下载，直接用）
+
+```python
+import json, urllib.request
+
+# 直接从 GitHub Pages 加载数据
+url = "https://dobguski.github.io/worldcup-2026-dashboard/match_data.json"
+matches = json.loads(urllib.request.urlopen(url).read())
+
+# 统计各队进球
+goals = {}
+for m in matches:
+    for team in [m['home_team'], m['away_team']]:
+        goals[team] = goals.get(team, 0) + (m.get('home_score') or 0) if team == m['home_team'] else (m.get('away_score') or 0)
+
+# 导出 CSV
+import csv
+with open('worldcup2026.csv', 'w', newline='') as f:
+    w = csv.DictWriter(f, fieldnames=matches[0].keys())
+    w.writeheader(); w.writerows(matches)
+```
+
+### 🎨 二次开发（Fork 后改数据源）
+
+```bash
+git clone https://github.com/dobguski/worldcup-2026-dashboard.git
+cd worldcup-2026-dashboard
+python3 -m http.server 8080    # 本地预览
+# 修改 dashboard.html 的数据 URL，换成你的 JSON
+# 或替换 match_data.json 为其他赛事数据
+```
+
+### ⚽ 适配其他赛事
+
+数据结构是标准的——只需替换 JSON 文件即可适配欧洲杯、亚洲杯、联赛等：
+
+```json
+{
+  "home_team": "Spain",
+  "away_team": "Argentina",
+  "home_score": 1, "away_score": 0,
+  "group": "KO",
+  "date": "2026-07-20",
+  "venue": "MetLife Stadium",
+  "penalty_home": null, "penalty_away": null
+}
+```
+
+替换 `match_data.json`、`standings.json`、`team_names.json` 三个文件，看板自动适配新赛事。
+
+### 🔗 嵌入你的网站
+
+```html
+<!-- 直接 iframe 嵌入完整看板 -->
+<iframe src="https://dobguski.github.io/worldcup-2026-dashboard/dashboard.html"
+        style="width:100%;height:100vh;border:none"></iframe>
+```
+
+---
+
 ## 🚀 Quick Start · 快速开始
 
 ### Option 1: GitHub Pages (simplest · 最简单)
