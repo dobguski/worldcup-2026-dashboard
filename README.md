@@ -46,6 +46,19 @@ A pure HTML/CSS/JS dashboard tracking the entire 2026 FIFA World Cup tournament 
 
 ---
 
+## 👥 Who is this for · 适用人群
+
+| 如果你... | 你可以... |
+|-----------|----------|
+| 🎓 在学前端 | 研究纯 HTML/CSS/JS (93KB 单文件) 如何构建完整应用——双语切换、实时轮询、响应式布局、LocalStorage 投票 |
+| 📊 做数据分析 | 直接下载结构化 JSON 数据做世界杯统计分析——105 场比赛、181 名射手、303 个进球 |
+| ⚽ 是球迷 | 回顾 2026 世界杯全部比赛——从小组赛到决赛，含比分、点球、半场数据 |
+| 💰 研究预测市场 | 学习 Polymarket CLOB API 集成：60 队赔率采集、621 条历史快照、HMAC 签名认证 |
+| 🔧 想二次开发 | Fork 后替换数据源，适配其他赛事（欧洲杯、亚洲杯、联赛均可） |
+| 🚀 学部署运维 | 参考 GitHub Pages / Nginx / systemd / Railway / Alibaba Cloud 五种部署方案 |
+
+---
+
 ## 🚀 Quick Start · 快速开始
 
 ### Option 1: GitHub Pages (simplest · 最简单)
