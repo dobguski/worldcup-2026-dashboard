@@ -34,7 +34,7 @@ jobs:
             -d '{"cname":"fifa.datamenu.xyz"}')
           echo "HTTP $code"
           cat /tmp/resp.json
-          if [ "$code" -ge 300 ]; then exit 1; fi
+          if [ "$code" -ge 300 ]; then echo "::error title=HTTP-$code::$(head -c 400 /tmp/resp.json)"; exit 1; fi
       - name: Read back
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
